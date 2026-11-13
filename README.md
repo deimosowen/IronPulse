@@ -68,6 +68,10 @@ Huawei Watch 4 Pro runs HarmonyOS 3 on an AOSP base, so a few things behave diff
 - CSS `box-shadow` is not supported, canvas `shadowBlur` fills closed shapes — glows are layered strokes.
 - In `<text>` with `<span>` children only the spans are rendered.
 
+## License
+
+[MIT](LICENSE) © 2026 Denis Ushanev. Third-party components keep their own licenses (see below).
+
 ## Credits
 
 - Font: [Barlow Condensed](https://github.com/jpt/barlow) — SIL Open Font License 1.1
