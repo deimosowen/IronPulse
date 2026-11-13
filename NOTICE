@@ -1,0 +1,7 @@
+IronPulse
+Copyright (c) 2026 Denis Ushanev — MIT License (see LICENSE)
+
+Third-party components keep their own licenses:
+- Barlow Condensed font — SIL Open Font License 1.1
+  (api8/entry/src/main/js/MainAbility/common/fonts/OFL.txt)
+- Icon shapes drawn after Lucide (https://lucide.dev) — ISC License

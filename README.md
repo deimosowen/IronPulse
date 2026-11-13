@@ -70,7 +70,7 @@ Huawei Watch 4 Pro runs HarmonyOS 3 on an AOSP base, so a few things behave diff
 
 ## License
 
-[MIT](LICENSE) © 2026 Denis Ushanev. Third-party components keep their own licenses (see below).
+[MIT](LICENSE) © 2026 Denis Ushanev. Third-party components keep their own licenses — see [NOTICE](NOTICE) and below.
 
 ## Credits
 
