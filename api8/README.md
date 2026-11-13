@@ -84,3 +84,7 @@ docs/SPEC.md              product spec
 - `<text>` with `<span>` children renders only the spans — wrap all text in spans.
 - In Barlow Condensed `--` merges into one bar; “no heart rate” is shown as `- -`.
 - Accent CSS classes must come after base classes — later rules win.
+- **Don't kill the app while it holds the heart-rate sensor** (`app install -r`, `am force-stop`): the
+  watch's SensorService fails to clean up the dead client (`ProcessDeathObserver pid is -1`), the
+  subscription leaks and the green HR LED stays on until the watch is rebooted. Close the app normally
+  (finish the workout → *Done* → swipe out of the menu) before reinstalling.
