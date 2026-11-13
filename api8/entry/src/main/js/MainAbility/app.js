@@ -37,6 +37,10 @@ export default {
   },
 
   onDestroy() {
+    // Обязательно отпускаем датчик пульса (иначе его зелёная подсветка может остаться включённой).
+    platform.stopHeartRate();
+    platform.holdCpu(false);
+    platform.keepScreenOn(false);
     platform.scheduleRestAlarm(-1);
   }
 };
