@@ -1,0 +1,43 @@
+<!-- Настройки / профиль. Тап по значению выбирает поле для колесика. -->
+<stack class="root">
+    <canvas ref="bg" class="bg"></canvas>
+    <list class="list" id="list" scrollbar="off" focusable="true">
+        <list-item class="head">
+            <div class="head-box">
+                <text class="title">{{ configured ? 'Настройки' : 'Профиль' }}</text>
+                <text class="caption" if="{{ !configured }}">нужен для расчёта калорий</text>
+            </div>
+        </list-item>
+
+        <list-item class="item" for="{{ steppers }}" tid="key">
+            <div class="card">
+                <text class="label {{ field === $item.key ? 'set' : '' }}">{{ $item.title }}</text>
+                <div class="stepper">
+                    <div class="circle" onclick="change($item.key, -1)"><text class="circle-text">−</text></div>
+                    <text class="value {{ field === $item.key ? 'set' : '' }}" onclick="select($item.key)">{{ $item.value }}</text>
+                    <div class="circle" onclick="change($item.key, 1)"><text class="circle-text">+</text></div>
+                </div>
+            </div>
+        </list-item>
+
+        <list-item class="item">
+            <div class="toggle" onclick="toggleSex">
+                <text class="toggle-label">Пол</text>
+                <text class="toggle-value">{{ sexText }}</text>
+            </div>
+        </list-item>
+        <list-item class="item">
+            <div class="toggle" onclick="toggleVibration">
+                <text class="toggle-label">Вибрация</text>
+                <text class="toggle-value">{{ vibration ? 'Вкл' : 'Выкл' }}</text>
+            </div>
+        </list-item>
+
+        <list-item class="btn-item">
+            <div class="save" onclick="save">
+                <text class="save-text">Сохранить</text>
+            </div>
+        </list-item>
+        <list-item class="pad"><div></div></list-item>
+    </list>
+</stack>

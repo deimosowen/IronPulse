@@ -1,0 +1,497 @@
+@import '../../common/style.css';
+
+.vs {
+    width: 466px;
+    height: 466px;
+}
+
+.now {
+    margin-top: 48px;
+    height: 40px;
+    font-size: 36px;
+    color: #FFFFFF;
+}
+
+.col {
+    width: 466px;
+    height: 254px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.eyebrow {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #90A4AE;
+}
+
+.sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #546E7A;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.dim {
+    color: #78909C;
+}
+
+/* ---------- Готов ---------- */
+.r-eyebrow {
+    margin-top: 4px;
+    height: 24px;
+}
+
+.r-total {
+    height: 66px;
+    font-size: 60px;
+}
+
+.r-hr {
+    margin-top: 0px;
+    height: 96px;
+    align-items: center;
+    justify-content: center;
+}
+
+.r-heart {
+    width: 46px;
+    height: 46px;
+    margin-right: 12px;
+}
+
+.r-hr-num {
+    font-size: 92px;
+}
+
+.r-unit {
+    font-size: 19px;
+    margin-left: 10px;
+    margin-top: 34px;
+}
+
+.zone-pill {
+    height: 40px;
+    border-radius: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* ---------- Подход / Отдых ---------- */
+.topline {
+    margin-top: 4px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.t-time {
+    font-size: 32px;
+    color: #CFD8DC;
+}
+
+.t-heart {
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
+}
+
+.t-hr {
+    font-size: 32px;
+}
+
+.t-flame {
+    width: 22px;
+    height: 22px;
+    margin-left: 12px;
+    margin-right: 4px;
+}
+
+.t-kcal {
+    font-size: 32px;
+    color: #FFCCBC;
+}
+
+.r-pills {
+    margin-top: 4px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.kcal-pill {
+    margin-left: 8px;
+    border-color: rgba(255, 138, 80, 0.4);
+    background-color: rgba(255, 138, 80, 0.12);
+}
+
+.set-chip {
+    margin-top: 6px;
+    height: 40px;
+    padding-left: 18px;
+    padding-right: 18px;
+    border-radius: 20px;
+    border-width: 1px;
+    border-color: rgba(255, 171, 0, 0.55);
+    background: linear-gradient(90deg, rgba(255, 201, 77, 0.22) 0%, rgba(255, 143, 0, 0.22) 100%);
+    align-items: center;
+}
+
+.chip-ex {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255, 201, 77, 0.75);
+}
+
+.chip-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    margin-left: 8px;
+    margin-right: 8px;
+    background-color: rgba(255, 201, 77, 0.6);
+}
+
+.chip-set {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #FFC94D;
+}
+
+.s-timer {
+    margin-top: -12px;
+    height: 130px;
+    font-size: 124px;
+}
+
+.zone-line {
+    margin-top: 12px;
+    height: 30px;
+    align-items: center;
+}
+
+/* Слот подписи над таймером — той же высоты, что плашка «УПР · ПОДХОД»: таймер в одной точке в любой фазе. */
+.label-slot {
+    margin-top: 6px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+.rest-eyebrow {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.rest-timer {
+    margin-top: -12px;
+    height: 130px;
+    font-size: 124px;
+}
+
+.timer-done {
+    color: #FFD36A;
+}
+
+.chips {
+    margin-top: 12px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.chip-gap {
+    margin-left: 10px;
+}
+
+/* ---------- Кнопка ---------- */
+.cta-wrap {
+    margin-top: 4px;
+    width: 270px;
+    height: 80px;
+}
+
+.hold-fill {
+    height: 80px;
+    border-radius: 40px;
+    background: linear-gradient(90deg, #FFD36A 0%, #FFAB00 100%);
+}
+
+.cta-content {
+    width: 270px;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+}
+
+.dark-amber {
+    color: #2B1400;
+}
+
+.dark-ice {
+    color: #00172E;
+}
+
+.dark-ink {
+    color: #111318;
+}
+
+/* ---------- Панель ---------- */
+.p-eyebrow {
+    margin-top: 2px;
+    height: 24px;
+}
+
+.p-top {
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-time {
+    font-size: 36px;
+}
+
+.p-count {
+    font-size: 36px;
+    color: #FFC94D;
+}
+
+.p-row {
+    margin-top: 6px;
+    width: 466px;
+    height: 166px;
+    justify-content: center;
+}
+
+.p-col {
+    width: 150px;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.round {
+    width: 116px;
+    height: 116px;
+    border-radius: 58px;
+    justify-content: center;
+    align-items: center;
+}
+
+.round-icon {
+    width: 42px;
+    height: 42px;
+}
+
+.pause-btn {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.16);
+    background: linear-gradient(160deg, #3C4048 0%, #22252B 55%, #15171B 100%);
+}
+
+.stop-wrap {
+    width: 130px;
+    height: 130px;
+}
+
+.ring {
+    width: 130px;
+    height: 130px;
+}
+
+.stop-btn {
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    background: linear-gradient(160deg, #FF8A80 0%, #FF3D57 40%, #C51162 100%);
+}
+
+.p-label {
+    margin-top: 2px;
+    font-size: 19px;
+    font-weight: 700;
+    color: #ECEFF1;
+}
+
+.stop-label {
+    color: #FF8A80;
+}
+
+.newex {
+    margin-top: 6px;
+    width: 300px;
+    height: 76px;
+    border-radius: 38px;
+    border-width: 1px;
+    border-color: rgba(255, 201, 77, 0.45);
+    background: linear-gradient(180deg, rgba(255, 201, 77, 0.2) 0%, rgba(255, 143, 0, 0.1) 100%);
+    justify-content: center;
+    align-items: center;
+}
+
+.newex-on {
+    background: linear-gradient(180deg, #FFD36A 0%, #FFAB00 100%);
+}
+
+.newex-icon {
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
+}
+
+.newex-text {
+    font-size: 23px;
+    font-weight: 800;
+    color: #FFC94D;
+}
+
+.newex-text-on {
+    color: #2B1400;
+}
+
+.chev {
+    margin-top: 2px;
+    width: 22px;
+    height: 22px;
+}
+
+.hint {
+    font-size: 15px;
+    color: #78909C;
+}
+
+/* ---------- Цвета (в конце — перекрывают базовые) ---------- */
+.amber {
+    color: #FFC94D;
+}
+
+.ice {
+    color: #4FC3F7;
+}
+
+.pill-ice {
+    border-color: rgba(41, 182, 246, 0.35);
+    background-color: rgba(41, 182, 246, 0.12);
+}
+
+.pill-amber {
+    border-color: rgba(255, 171, 0, 0.45);
+    background-color: rgba(255, 171, 0, 0.14);
+}
+
+.pill-green {
+    border-color: rgba(0, 230, 118, 0.3);
+    background-color: rgba(0, 230, 118, 0.1);
+}
+
+.txt-ice {
+    color: #B3E5FC;
+}
+
+.txt-amber {
+    color: #FFE082;
+}
+
+.txt-green {
+    color: #B9F6CA;
+}
+
+.zone0-pill {
+    border-color: rgba(0, 230, 118, 0.35);
+    background-color: rgba(0, 230, 118, 0.12);
+}
+
+.zone1-pill {
+    border-color: rgba(255, 196, 0, 0.4);
+    background-color: rgba(255, 196, 0, 0.12);
+}
+
+.zone2-pill {
+    border-color: rgba(255, 61, 0, 0.45);
+    background-color: rgba(255, 61, 0, 0.14);
+}
+
+.zonex-pill {
+    border-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.zone0-dot {
+    background-color: #00E676;
+}
+
+.zone1-dot {
+    background-color: #FFC400;
+}
+
+.zone2-dot {
+    background-color: #FF3D00;
+}
+
+.zonex-dot {
+    background-color: #607D8B;
+}
+
+.zone0-text {
+    color: #69F0AE;
+}
+
+.zone1-text {
+    color: #FFD54F;
+}
+
+.zone2-text {
+    color: #FF8A65;
+}
+
+.zonex-text {
+    color: #90A4AE;
+}
+
+/* ---------- Тёмный режим отдыха ---------- */
+.dimmer {
+    width: 466px;
+    height: 466px;
+    background-color: #000000;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dim-now {
+    color: #5B6770;
+}
+
+.dim-label {
+    color: #1E4E66;
+}
+
+.dim-timer {
+    color: #4A5A63;
+}
+
+.dim-target {
+    font-size: 18px;
+    color: #37474F;
+}
+
+.txt-kcal {
+    color: #FFCCBC;
+}
+
+.dim-chip {
+    border-color: #3A2C08;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.dim-chip-text {
+    color: #6E5A28;
+}

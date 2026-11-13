@@ -1,0 +1,108 @@
+@import '../../common/style.css';
+
+.clock {
+    margin-top: 28px;
+    height: 36px;
+    font-size: 32px;
+    color: #CFD8DC;
+}
+
+.logo-row {
+    margin-top: 6px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: #FFFFFF;
+}
+
+.logo-white {
+    font-size: 20px;
+    font-weight: 800;
+    color: #FFFFFF;
+}
+
+.logo-accent {
+    font-size: 20px;
+    font-weight: 800;
+    color: #FFAB00;
+}
+
+.hr-chip {
+    margin-top: 6px;
+    width: 160px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.1);
+    align-items: center;
+    justify-content: center;
+}
+
+.hr-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 7px;
+}
+
+.hr-num {
+    font-size: 28px;
+    margin-right: 6px;
+}
+
+.hr-unit {
+    font-size: 15px;
+}
+
+.start {
+    margin-top: 38px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background: linear-gradient(160deg, #FFE082 0%, #FFB300 34%, #FF8F00 66%, #E65100 100%);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-icon {
+    width: 62px;
+    height: 62px;
+    margin-bottom: 6px;
+}
+
+.start-text {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #3A1600;
+}
+
+.settings {
+    margin-top: 16px;
+    width: 64px;
+    height: 44px;
+    border-radius: 22px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.07);
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-icon {
+    width: 22px;
+    height: 22px;
+}

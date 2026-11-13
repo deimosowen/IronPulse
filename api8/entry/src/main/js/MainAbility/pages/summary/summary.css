@@ -1,0 +1,135 @@
+@import '../../common/style.css';
+
+.trophy {
+    margin-top: 32px;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background: linear-gradient(160deg, #FFE082 0%, #FFB300 45%, #FF8F00 100%);
+    justify-content: center;
+    align-items: center;
+}
+
+.trophy-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.title {
+    margin-top: 8px;
+    height: 24px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #B0BEC5;
+}
+
+.total {
+    height: 92px;
+    font-size: 88px;
+}
+
+.grid {
+    margin-top: 4px;
+    width: 344px;
+    flex-direction: column;
+}
+
+.row {
+    width: 344px;
+    height: 60px;
+}
+
+.row-gap {
+    margin-top: 10px;
+}
+
+.cell {
+    width: 167px;
+    height: 60px;
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.07);
+    background-color: rgba(255, 255, 255, 0.05);
+    padding-left: 14px;
+    align-items: center;
+}
+
+.cell-gap {
+    margin-left: 10px;
+}
+
+.cell-icon {
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
+}
+
+.cell-col {
+    flex-direction: column;
+}
+
+.cell-val {
+    font-size: 32px;
+}
+
+.cell-main {
+    font-size: 32px;
+    color: #FFFFFF;
+}
+
+.cell-sub {
+    font-size: 19px;
+    color: #FFC94D;
+}
+
+.cell-cap {
+    font-size: 14px;
+    color: #90A4AE;
+}
+
+.zones {
+    margin-top: 12px;
+    width: 260px;
+    height: 12px;
+}
+
+.z {
+    height: 12px;
+    border-radius: 6px;
+    margin-right: 3px;
+}
+
+.z0 {
+    background: linear-gradient(90deg, #00C853 0%, #69F0AE 100%);
+}
+
+.z1 {
+    background: linear-gradient(90deg, #FFB300 0%, #FFD54F 100%);
+}
+
+.z2 {
+    background: linear-gradient(90deg, #FF3D00 0%, #FF6E40 100%);
+}
+
+.zx {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.done {
+    margin-top: 12px;
+    width: 180px;
+    height: 58px;
+    border-radius: 29px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.18);
+    background: linear-gradient(180deg, #3A3D45 0%, #1F2126 100%);
+    justify-content: center;
+    align-items: center;
+}
+
+.done-text {
+    font-size: 23px;
+    font-weight: 800;
+    color: #FFFFFF;
+}

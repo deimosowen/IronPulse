@@ -1,0 +1,52 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "description": "$string:module_desc",
+    "mainElement": "EntryAbility",
+    "deviceTypes": ["wearable"],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "EntryAbility",
+        "srcEntry": "./ets/entryability/EntryAbility.ets",
+        "description": "$string:EntryAbility_desc",
+        "icon": "$media:icon",
+        "label": "$string:EntryAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+        "launchType": "singleton",
+        // Тип непрерывной задачи. Должен совпадать с CONTINUOUS_TASK_MODE в service/BackgroundRunner.ets.
+        // ВНИМАНИЕ: проверить на реальном устройстве, какой тип допускается для сторонних фитнес-приложений на часах.
+        "backgroundModes": ["location"],
+        "skills": [
+          {
+            "entities": ["entity.system.home"],
+            "actions": ["ohos.want.action.home"]
+          }
+        ]
+      }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.READ_HEALTH_DATA",
+        "reason": "$string:reason_health",
+        "usedScene": { "abilities": ["EntryAbility"], "when": "always" }
+      },
+      { "name": "ohos.permission.VIBRATE" },
+      {
+        "name": "ohos.permission.KEEP_BACKGROUND_RUNNING",
+        "reason": "$string:reason_background",
+        "usedScene": { "abilities": ["EntryAbility"], "when": "always" }
+      },
+      {
+        "name": "ohos.permission.PUBLISH_AGENT_REMINDER",
+        "reason": "$string:reason_reminder",
+        "usedScene": { "abilities": ["EntryAbility"], "when": "always" }
+      }
+    ]
+  }
+}

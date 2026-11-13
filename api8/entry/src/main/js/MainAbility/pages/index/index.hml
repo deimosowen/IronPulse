@@ -1,0 +1,23 @@
+<!-- Экран 1: меню -->
+<stack class="screen">
+    <canvas ref="bg" class="bg"></canvas>
+    <div class="page">
+        <text class="numsemi clock">{{ clock }}</text>
+        <div class="logo-row">
+            <image class="logo-icon" src="/common/icons/logo.png"></image>
+            <text class="logo-text"><span class="logo-white">IRON</span><span class="logo-accent">PULSE</span></text>
+        </div>
+        <div class="hr-chip">
+            <image class="hr-icon" src="/common/icons/heart.png"></image>
+            <text class="num hr-num">{{ hrText }}</text>
+            <text class="label hr-unit">уд/мин</text>
+        </div>
+        <div class="start" onclick="start">
+            <image class="start-icon" src="/common/icons/play.png"></image>
+            <text class="start-text">{{ starting ? '…' : 'СТАРТ' }}</text>
+        </div>
+        <div class="settings" onclick="openSettings">
+            <image class="settings-icon" src="/common/icons/gear.png"></image>
+        </div>
+    </div>
+</stack>

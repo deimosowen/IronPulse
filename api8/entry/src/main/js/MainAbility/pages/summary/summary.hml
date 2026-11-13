@@ -1,0 +1,54 @@
+<!-- Экран 7: итог. После «Готово» статистика сбрасывается. -->
+<stack class="screen">
+    <canvas ref="bg" class="bg"></canvas>
+    <div class="page">
+        <div class="trophy">
+            <image class="trophy-icon" src="/common/icons/trophy.png"></image>
+        </div>
+        <text class="title">ТРЕНИРОВКА ЗАВЕРШЕНА</text>
+        <text class="num total">{{ total }}</text>
+        <div class="grid">
+            <div class="row">
+                <div class="cell">
+                    <image class="cell-icon" src="/common/icons/repeat.png"></image>
+                    <div class="cell-col">
+                        <text class="num cell-val"><span class="cell-main">{{ sets }}</span><span class="cell-sub">{{ exText }}</span></text>
+                        <text class="cell-cap">{{ setsWord }}</text>
+                    </div>
+                </div>
+                <div class="cell cell-gap">
+                    <image class="cell-icon" src="/common/icons/flame.png"></image>
+                    <div class="cell-col">
+                        <text class="num cell-val">{{ kcal }}</text>
+                        <text class="cell-cap">ккал</text>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-gap">
+                <div class="cell">
+                    <image class="cell-icon" src="/common/icons/heart_flat.png"></image>
+                    <div class="cell-col">
+                        <text class="num cell-val">{{ hrAvg }}</text>
+                        <text class="cell-cap">ср. пульс</text>
+                    </div>
+                </div>
+                <div class="cell cell-gap">
+                    <image class="cell-icon" src="/common/icons/pulse_red.png"></image>
+                    <div class="cell-col">
+                        <text class="num cell-val">{{ hrMax }}</text>
+                        <text class="cell-cap">макс. пульс</text>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="zones">
+            <div class="z z0" style="flex-grow: {{ z0 }};" if="{{ z0 > 0 }}"></div>
+            <div class="z z1" style="flex-grow: {{ z1 }};" if="{{ z1 > 0 }}"></div>
+            <div class="z z2" style="flex-grow: {{ z2 }};" if="{{ z2 > 0 }}"></div>
+            <div class="z zx" style="flex-grow: 1;" if="{{ zEmpty }}"></div>
+        </div>
+        <div class="done" onclick="close">
+            <text class="done-text">Готово</text>
+        </div>
+    </div>
+</stack>

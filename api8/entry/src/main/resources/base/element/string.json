@@ -1,0 +1,7 @@
+{
+  "string": [
+    { "name": "entry_MainAbility", "value": "IronPulse" },
+    { "name": "description_mainability", "value": "Трекер силовых тренировок" },
+    { "name": "reason_health", "value": "Пульс нужен для зон нагрузки и расчёта калорий" }
+  ]
+}

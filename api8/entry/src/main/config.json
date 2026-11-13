@@ -1,0 +1,89 @@
+{
+  "app": {
+    "bundleName": "com.ironpulse.watch",
+    "vendor": "ironpulse",
+    "version": {
+      "code": 1000000,
+      "name": "1.0.0"
+    }
+  },
+  "deviceConfig": {},
+  "module": {
+    "package": "com.ironpulse.watch",
+    "name": ".MyApplication",
+    "mainAbility": ".MainAbility",
+    "deviceType": [
+      "wearable"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "entry",
+      "moduleType": "entry",
+      "installationFree": false
+    },
+    "abilities": [
+      {
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ],
+        "orientation": "unspecified",
+        "visible": true,
+        "srcPath": "MainAbility",
+        "name": ".MainAbility",
+        "srcLanguage": "js",
+        "icon": "$media:icon",
+        "description": "$string:description_mainability",
+        "formsEnabled": false,
+        "label": "$string:entry_MainAbility",
+        "type": "page",
+        "launchType": "singleton"
+      }
+    ],
+    "js": [
+      {
+        "pages": [
+          "pages/index/index",
+          "pages/workout/workout",
+          "pages/summary/summary",
+          "pages/settings/settings"
+        ],
+        "name": ".MainAbility",
+        "window": {
+          "designWidth": 466,
+          "autoDesignWidth": false
+        }
+      }
+    ],
+    "reqPermissions": [
+      {
+        "name": "ohos.permission.READ_HEALTH_DATA",
+        "reason": "$string:reason_health",
+        "usedScene": {
+          "ability": [
+            ".MainAbility"
+          ],
+          "when": "always"
+        }
+      },
+      {
+        "name": "ohos.permission.VIBRATE"
+      },
+      {
+        "name": "ohos.permission.KEEP_BACKGROUND_RUNNING"
+      },
+      {
+        "name": "ohos.permission.RUNNING_LOCK"
+      },
+      {
+        "name": "ohos.permission.PUBLISH_AGENT_REMINDER"
+      }
+    ]
+  }
+}

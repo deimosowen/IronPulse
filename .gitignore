@@ -1,0 +1,25 @@
+# Dependencies / tool caches
+node_modules/
+oh_modules/
+.hvigor/
+.idea/
+.cxx/
+.clangd
+.clang-format
+.clang-tidy
+.appanalyzer/
+
+# Build outputs
+**/build/
+**/.test/
+*.hap
+*.app
+
+# Machine-local settings (SDK / Node.js paths)
+local.properties
+
+# Signing material — never commit (DevEco stores it in ~/.ohos/config)
+*.p12
+*.cer
+*.p7b
+*.csr

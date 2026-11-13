@@ -1,0 +1,20 @@
+{
+  "license": "ISC",
+  "devDependencies": {},
+  "name": "ironpulse",
+  "ohos": {
+    "org": "huawei",
+    "directoryLevel": "project",
+    "buildTool": "hvigor"
+  },
+  "description": "IronPulse for HarmonyOS 3 wearables (API 8, JS FA)",
+  "repository": {},
+  "scripts": {
+    "test": "node --test test"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "@ohos/hvigor-ohos-plugin": "2.4.2",
+    "@ohos/hvigor": "2.4.2"
+  }
+}

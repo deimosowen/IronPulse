@@ -1,0 +1,145 @@
+<!--
+  Тренировка. Вертикальная лента: [панель] ↑свайп вниз↑ [готов / подход / отдых].
+  Фон, свечение, дуга пульса и кольцо отдыха рисуются в canvas под интерфейсом.
+-->
+<stack class="screen">
+    <canvas ref="bg" class="bg"></canvas>
+    <swiper class="vs" vertical="true" index="{{ vPage }}" loop="false" indicator="false" onchange="onPage">
+
+        <!-- Панель (свайп вниз) -->
+        <div class="page">
+            <text class="numsemi now">{{ nowText }}</text>
+            <text class="eyebrow p-eyebrow">ТРЕНИРОВКА</text>
+            <div class="p-top">
+                <text class="numsemi p-time">{{ timeText }}</text>
+                <div class="sep"></div>
+                <text class="numsemi p-count">{{ countText }}</text>
+            </div>
+            <div class="p-row">
+                <div class="p-col">
+                    <div class="round pause-btn" onclick="togglePause">
+                        <image class="round-icon" src="{{ paused ? '/common/icons/play_light.png' : '/common/icons/pause.png' }}"></image>
+                    </div>
+                    <text class="p-label">{{ paused ? 'Продолжить' : 'Пауза' }}</text>
+                </div>
+                <div class="p-col">
+                    <stack class="stop-wrap" ontouchstart="finishDown" ontouchend="finishUp" ontouchcancel="finishUp">
+                        <canvas ref="ring" class="ring"></canvas>
+                        <div class="round stop-btn">
+                            <image class="round-icon" src="/common/icons/stop.png"></image>
+                        </div>
+                    </stack>
+                    <text class="p-label stop-label">Завершить</text>
+                </div>
+            </div>
+            <div class="newex {{ pendingNew ? 'newex-on' : '' }}" onclick="markNew">
+                <image class="newex-icon" src="{{ pendingNew ? '/common/icons/next_dark.png' : '/common/icons/next_amber.png' }}"></image>
+                <text class="newex-text {{ pendingNew ? 'newex-text-on' : '' }}">{{ pendingNew ? 'Дальше — новое упр.' : 'Новое упражнение' }}</text>
+            </div>
+            <image class="chev" src="/common/icons/chevron_up.png"></image>
+            <text class="hint">{{ finishHold > 0 ? 'держите…' : 'завершить — удерживайте' }}</text>
+        </div>
+
+        <!-- Основной экран -->
+        <div class="page">
+            <text class="numsemi now">{{ nowText }}</text>
+
+            <!-- Готов -->
+            <div class="col" if="{{ phase === 'ready' }}">
+                <text class="eyebrow r-eyebrow">{{ paused ? 'НА ПАУЗЕ' : 'ТРЕНИРОВКА' }}</text>
+                <text class="numsemi r-total {{ paused ? 'dim' : '' }}">{{ timeText }}</text>
+                <div class="r-hr">
+                    <image class="r-heart" src="/common/icons/heart.png"></image>
+                    <text class="num r-hr-num">{{ hrText }}</text>
+                    <text class="label r-unit">уд/мин</text>
+                </div>
+                <div class="r-pills">
+                    <div class="pill zone-pill {{ zoneClass }}">
+                        <div class="dot {{ zoneDot }}"></div>
+                        <text class="pill-text {{ zoneText }}">{{ zoneName }}</text>
+                    </div>
+                    <div class="pill zone-pill kcal-pill">
+                        <image class="pill-icon" src="/common/icons/flame.png"></image>
+                        <text class="pill-text txt-kcal">{{ kcalText }} ккал</text>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Подход -->
+            <div class="col" if="{{ phase === 'set' }}">
+                <div class="topline">
+                    <text class="numsemi t-time {{ paused ? 'dim' : '' }}">{{ timeText }}</text>
+                    <div class="sep"></div>
+                    <image class="t-heart" src="/common/icons/heart_flat.png"></image>
+                    <text class="numsemi t-hr">{{ hrText }}</text>
+                    <image class="t-flame" src="/common/icons/flame.png"></image>
+                    <text class="numsemi t-kcal">{{ kcalText }}</text>
+                </div>
+                <div class="set-chip">
+                    <text class="chip-ex">УПР {{ exercise }}</text>
+                    <div class="chip-dot"></div>
+                    <text class="chip-set">ПОДХОД {{ setNumber }}</text>
+                </div>
+                <text class="num s-timer {{ paused ? 'dim' : '' }}">{{ phaseText }}</text>
+                <div class="zone-line">
+                    <div class="dot {{ zoneDot }}"></div>
+                    <text class="pill-text {{ zoneText }}">{{ paused ? 'на паузе' : zoneName }}</text>
+                </div>
+            </div>
+
+            <!-- Отдых -->
+            <div class="col" if="{{ phase === 'rest' }}">
+                <div class="topline">
+                    <text class="numsemi t-time {{ paused ? 'dim' : '' }}">{{ timeText }}</text>
+                    <div class="sep"></div>
+                    <image class="t-heart" src="/common/icons/heart_flat.png"></image>
+                    <text class="numsemi t-hr">{{ hrText }}</text>
+                    <image class="t-flame" src="/common/icons/flame.png"></image>
+                    <text class="numsemi t-kcal">{{ kcalText }}</text>
+                </div>
+                <div class="label-slot">
+                    <text class="eyebrow rest-eyebrow {{ restLate ? 'amber' : 'ice' }}">{{ restEyebrow }}</text>
+                </div>
+                <text class="num rest-timer {{ restLate ? 'timer-done' : '' }} {{ paused ? 'dim' : '' }}">{{ phaseText }}</text>
+                <div class="chips">
+                    <div class="pill {{ restLate ? 'pill-amber' : 'pill-ice' }}">
+                        <image class="pill-icon" src="/common/icons/timer.png"></image>
+                        <text class="pill-text {{ restLate ? 'txt-amber' : 'txt-ice' }}">{{ markText }}</text>
+                    </div>
+                    <div class="pill pill-green chip-gap" if="{{ showDrop }}">
+                        <image class="pill-icon" src="/common/icons/down.png"></image>
+                        <text class="pill-text txt-green">{{ dropText }}</text>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Главная кнопка -->
+            <stack class="cta-wrap" ontouchstart="ctaDown" ontouchend="ctaUp" ontouchcancel="ctaCancel">
+                <div class="cta {{ ctaClass }}"></div>
+                <div class="hold-fill" if="{{ holdW > 0 }}" style="width: {{ holdW }}px;"></div>
+                <div class="cta-content">
+                    <image class="cta-icon" src="{{ ctaIcon }}"></image>
+                    <text class="cta-text {{ ctaTextClass }}">{{ ctaLabel }}</text>
+                </div>
+            </stack>
+        </div>
+    </swiper>
+
+    <!-- Тёмный режим отдыха: экран не гаснет, но почти чёрный (как AOD). Касание — обратно. -->
+    <div class="dimmer" if="{{ dim }}" onclick="wake">
+        <text class="numsemi now dim-now">{{ nowText }}</text>
+        <div class="col">
+            <div class="topline"></div>
+            <div class="set-chip dim-chip" if="{{ dimSet }}">
+                <text class="chip-set dim-chip-text">{{ dimLabel }}</text>
+            </div>
+            <div class="label-slot" else>
+                <text class="eyebrow rest-eyebrow dim-label">{{ dimLabel }}</text>
+            </div>
+            <text class="num {{ dimSet ? 's-timer' : 'rest-timer' }} dim-timer">{{ phaseText }}</text>
+            <div class="{{ dimSet ? 'zone-line' : 'chips' }}">
+                <text class="dim-target">{{ dimSub }}</text>
+            </div>
+        </div>
+    </div>
+</stack>

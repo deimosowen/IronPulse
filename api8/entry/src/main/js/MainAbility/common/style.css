@@ -1,0 +1,108 @@
+@font-face {
+    font-family: barlow;
+    src: url("/common/fonts/BarlowCondensed-Bold.ttf");
+}
+
+@font-face {
+    font-family: barlowsemi;
+    src: url("/common/fonts/BarlowCondensed-SemiBold.ttf");
+}
+
+.screen {
+    width: 466px;
+    height: 466px;
+    background-color: #000000;
+}
+
+.bg {
+    width: 466px;
+    height: 466px;
+}
+
+.page {
+    width: 466px;
+    height: 466px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.num {
+    font-family: barlow;
+    color: #FFFFFF;
+}
+
+.numsemi {
+    font-family: barlowsemi;
+    color: #FFFFFF;
+}
+
+.label {
+    color: #90A4AE;
+}
+
+.handle {
+    margin-top: 18px;
+    width: 40px;
+    height: 5px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Главная кнопка-капсула 300×92 */
+.cta {
+    width: 270px;
+    height: 80px;
+    border-radius: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cta-amber {
+    background: linear-gradient(180deg, #FFD36A 0%, #FFAB00 45%, #FF8F00 100%);
+}
+
+.cta-blue {
+    background: linear-gradient(180deg, #8EE3FF 0%, #29B6F6 45%, #1E88E5 100%);
+}
+
+.cta-white {
+    background: linear-gradient(180deg, #FFFFFF 0%, #ECEFF1 55%, #CFD8DC 100%);
+}
+
+.cta-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 12px;
+}
+
+.cta-text {
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.pill {
+    height: 38px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 19px;
+    border-width: 1px;
+    align-items: center;
+}
+
+.pill-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+}
+
+.pill-text {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin-right: 8px;
+}

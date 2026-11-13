@@ -1,0 +1,10 @@
+{
+  "string": [
+    { "name": "module_desc", "value": "IronPulse — силовые тренировки" },
+    { "name": "EntryAbility_desc", "value": "Трекер силовых тренировок" },
+    { "name": "EntryAbility_label", "value": "IronPulse" },
+    { "name": "reason_health", "value": "Пульс нужен для зон нагрузки и расчёта калорий" },
+    { "name": "reason_background", "value": "Таймеры и пульс продолжают работать при погасшем экране" },
+    { "name": "reason_reminder", "value": "Сигнал об окончании отдыха при погасшем экране" }
+  ]
+}

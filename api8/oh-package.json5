@@ -1,0 +1,10 @@
+{
+  "name": "ironpulse",
+  "version": "1.0.0",
+  "description": "IronPulse for HarmonyOS 3 wearables",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {},
+  "devDependencies": {}
+}
