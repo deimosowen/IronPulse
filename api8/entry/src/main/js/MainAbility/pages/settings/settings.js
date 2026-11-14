@@ -40,7 +40,7 @@ export default {
     onShow() {
         const cv = this.$refs.bg;
         if (cv) {
-            drawScene(cv.getContext('2d', { antialias: true }), { scene: 'menu' });
+            drawScene(cv.getContext('2d', { antialias: true }), { scene: 'settings' });
         }
         try {
             this.$element('list').focus();

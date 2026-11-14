@@ -1,23 +1,30 @@
-<!-- Экран 1: меню -->
+<!--
+  Экран 1: меню. Всё выровнено по центру экрана (233, 233) абсолютными координатами:
+  кольца, шкала и сама кнопка «СТАРТ» рисуются на canvas (common/draw.js, сцена menu),
+  поверх кнопки — прозрачная область нажатия с иконкой и подписью.
+-->
 <stack class="screen">
     <canvas ref="bg" class="bg"></canvas>
-    <div class="page">
-        <text class="numsemi clock">{{ clock }}</text>
-        <div class="logo-row">
-            <image class="logo-icon" src="/common/icons/logo.png"></image>
-            <text class="logo-text"><span class="logo-white">IRON</span><span class="logo-accent">PULSE</span></text>
-        </div>
-        <div class="hr-chip">
-            <image class="hr-icon" src="/common/icons/heart.png"></image>
-            <text class="num hr-num">{{ hrText }}</text>
-            <text class="label hr-unit">уд/мин</text>
-        </div>
-        <div class="start" onclick="start">
-            <image class="start-icon" src="/common/icons/play.png"></image>
-            <text class="start-text">{{ starting ? '…' : 'СТАРТ' }}</text>
-        </div>
-        <div class="settings" onclick="openSettings">
-            <image class="settings-icon" src="/common/icons/gear.png"></image>
-        </div>
+
+    <text class="numsemi clock">{{ clock }}</text>
+
+    <div class="logo-row">
+        <image class="logo-icon" src="/common/icons/logo.png"></image>
+        <text class="logo-text"><span class="logo-white">IRON</span><span class="logo-accent">PULSE</span></text>
+    </div>
+
+    <div class="start" onclick="start">
+        <image class="start-icon" src="/common/icons/play.png"></image>
+        <text class="start-text">{{ starting ? '…' : 'СТАРТ' }}</text>
+    </div>
+
+    <div class="hr-chip">
+        <image class="hr-icon" src="/common/icons/heart.png"></image>
+        <text class="num hr-num">{{ hrText }}</text>
+        <text class="label hr-unit">уд/мин</text>
+    </div>
+
+    <div class="settings" onclick="openSettings">
+        <image class="settings-icon" src="/common/icons/gear.png"></image>
     </div>
 </stack>

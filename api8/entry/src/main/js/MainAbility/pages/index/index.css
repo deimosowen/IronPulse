@@ -1,49 +1,86 @@
 @import '../../common/style.css';
 
+/* Геометрия: центр экрана (233, 233); кнопка r=88, кольца r=104/120 — рисуются на canvas. */
+
 .clock {
-    margin-top: 28px;
-    height: 36px;
-    font-size: 32px;
-    color: #CFD8DC;
+    position: absolute;
+    left: 0px;
+    top: 34px;
+    width: 466px;
+    height: 38px;
+    font-size: 34px;
+    color: #ECEFF1;
+    text-align: center;
 }
 
 .logo-row {
-    margin-top: 6px;
-    height: 28px;
-    align-items: center;
+    position: absolute;
+    left: 0px;
+    top: 76px;
+    width: 466px;
+    height: 26px;
     justify-content: center;
+    align-items: center;
 }
 
 .logo-icon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     margin-right: 8px;
 }
 
 .logo-text {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 800;
     letter-spacing: 5px;
-    color: #FFFFFF;
 }
 
 .logo-white {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 800;
     color: #FFFFFF;
 }
 
 .logo-accent {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 800;
     color: #FFAB00;
 }
 
+/* Область нажатия поверх нарисованной кнопки: 176×176 с центром в (233, 233). */
+.start {
+    position: absolute;
+    left: 145px;
+    top: 145px;
+    width: 176px;
+    height: 176px;
+    border-radius: 88px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-icon {
+    width: 58px;
+    height: 58px;
+    margin-left: 8px;
+    margin-bottom: 4px;
+}
+
+.start-text {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #3A1600;
+}
+
 .hr-chip {
-    margin-top: 6px;
-    width: 160px;
-    height: 40px;
-    border-radius: 20px;
+    position: absolute;
+    left: 158px;
+    top: 362px;
+    width: 150px;
+    height: 34px;
+    border-radius: 17px;
     background-color: rgba(255, 255, 255, 0.06);
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.1);
@@ -52,49 +89,27 @@
 }
 
 .hr-icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 7px;
-}
-
-.hr-num {
-    font-size: 28px;
+    width: 16px;
+    height: 16px;
     margin-right: 6px;
 }
 
-.hr-unit {
-    font-size: 15px;
-}
-
-.start {
-    margin-top: 38px;
-    width: 200px;
-    height: 200px;
-    border-radius: 100px;
-    background: linear-gradient(160deg, #FFE082 0%, #FFB300 34%, #FF8F00 66%, #E65100 100%);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.start-icon {
-    width: 62px;
-    height: 62px;
-    margin-bottom: 6px;
-}
-
-.start-text {
+.hr-num {
     font-size: 24px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    color: #3A1600;
+    margin-right: 5px;
+}
+
+.hr-unit {
+    font-size: 13px;
 }
 
 .settings {
-    margin-top: 16px;
-    width: 64px;
-    height: 44px;
-    border-radius: 22px;
+    position: absolute;
+    left: 207px;
+    top: 402px;
+    width: 52px;
+    height: 34px;
+    border-radius: 17px;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.12);
     background-color: rgba(255, 255, 255, 0.07);
@@ -103,6 +118,6 @@
 }
 
 .settings-icon {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
 }

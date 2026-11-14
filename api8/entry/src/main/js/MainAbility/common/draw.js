@@ -11,7 +11,8 @@ const HR_START = (220 - 90) * DEG;
 const HR_SWEEP = 280 * DEG;
 
 const GLOWS = {
-  menu: [[0.5, 1.18, 'rgba(255,122,0,0.55)', 'rgba(255,92,0,0.16)', 0.62], [0.5, -0.12, 'rgba(79,195,247,0.14)', null, 0.42], [0.5, 0.618, 'rgba(255,140,0,0.50)', null, 0.24]],
+  settings: [[0.5, 1.15, 'rgba(255,110,0,0.28)', null, 0.40]],
+  menu: [[0.5, 0.5, 'rgba(255,140,0,0.30)', 'rgba(255,100,0,0.08)', 0.50], [0.5, 1.15, 'rgba(255,110,0,0.30)', null, 0.38]],
   ready: [[0.5, 0.62, 'rgba(0,230,118,0.20)', 'rgba(0,200,100,0.06)', 0.58], [0.5, 1.2, 'rgba(255,143,0,0.35)', null, 0.40]],
   set: [[0.5, 0.46, 'rgba(255,145,0,0.32)', 'rgba(255,110,0,0.10)', 0.60]],
   rest: [[0.5, 0.44, 'rgba(41,121,255,0.34)', 'rgba(0,176,255,0.10)', 0.62]],
@@ -134,6 +135,54 @@ function zoneGlowColor(zone) {
   return 'rgba(0,230,118,ALPHA)';
 }
 
+/** Меню: шкала по краю, два кольца и кнопка «СТАРТ» — всё концентрично центру экрана. */
+function drawMenu(ctx) {
+  // Шкала на 60 делений, каждое пятое — янтарное и длиннее.
+  ctx.lineCap = 'round';
+  for (let i = 0; i < 60; i++) {
+    const a = i * Math.PI / 30 - Math.PI / 2;
+    const major = i % 5 === 0;
+    const r1 = major ? 203 : 207;
+    const r2 = 214;
+    ctx.lineWidth = major ? 3 : 2;
+    ctx.strokeStyle = major ? 'rgba(255,171,0,0.75)' : 'rgba(255,255,255,0.16)';
+    ctx.beginPath();
+    ctx.moveTo(C + r1 * Math.cos(a), C + r1 * Math.sin(a));
+    ctx.lineTo(C + r2 * Math.cos(a), C + r2 * Math.sin(a));
+    ctx.stroke();
+  }
+  // Кольца
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(255,171,0,0.18)';
+  ctx.beginPath();
+  ctx.arc(C, C, 120, 0, 2 * Math.PI, false);
+  ctx.stroke();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255,171,0,0.42)';
+  ctx.beginPath();
+  ctx.arc(C, C, 104, 0, 2 * Math.PI, false);
+  ctx.stroke();
+  // Свечение кнопки — плавный радиальный градиент от края кнопки наружу
+  const halo = ctx.createRadialGradient(C, C, 84, C, C, 124);
+  halo.addColorStop(0, 'rgba(255,140,0,0.38)');
+  halo.addColorStop(0.45, 'rgba(255,120,0,0.12)');
+  halo.addColorStop(1, 'rgba(255,100,0,0)');
+  ctx.fillStyle = halo;
+  ctx.beginPath();
+  ctx.arc(C, C, 124, 0, 2 * Math.PI, false);
+  ctx.fill();
+  // Кнопка: объёмный градиент с мягким бликом вверху слева
+  const g = ctx.createRadialGradient(C - 26, C - 30, 18, C, C, 88);
+  g.addColorStop(0, '#FFD36A');
+  g.addColorStop(0.4, '#FFAB00');
+  g.addColorStop(0.78, '#FF8F00');
+  g.addColorStop(1, '#EF6C00');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(C, C, 88, 0, 2 * Math.PI, false);
+  ctx.fill();
+}
+
 /**
  * opts: { scene: 'menu'|'ready'|'set'|'rest'|'restLate'|'panel'|'summary'|'paused',
  *         hrFrac, zone, restProgress, restMarks }
@@ -147,16 +196,7 @@ export function drawScene(ctx, opts) {
 
   const scene = opts.scene;
   if (scene === 'menu') {
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba(255,171,0,0.14)';
-    ctx.beginPath();
-    ctx.arc(C, 288, 136, 0, 2 * Math.PI, false);
-    ctx.stroke();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(255,171,0,0.30)';
-    ctx.beginPath();
-    ctx.arc(C, 288, 118, 0, 2 * Math.PI, false);
-    ctx.stroke();
+    drawMenu(ctx);
     return;
   }
   if (scene === 'ready' || scene === 'set' || scene === 'paused') {
