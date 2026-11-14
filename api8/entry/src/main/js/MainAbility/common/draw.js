@@ -82,8 +82,8 @@ function hrArc(ctx, frac, width, glowColor, dim) {
   }
 }
 
-/** Кольцо отдыха: шкала 0–5:00, метка на 3:00; после 5:00 — янтарное. */
-function restRing(ctx, progress, marks) {
+/** Кольцо отдыха: шкала до второго сигнала, метка — первый сигнал (frac шкалы); после второго — янтарное. */
+function restRing(ctx, progress, marks, frac) {
   ctx.lineCap = 'round';
   const w = 10;
   const late = marks >= 2;
@@ -116,8 +116,8 @@ function restRing(ctx, progress, marks) {
     ctx.stroke();
   }
   if (!late) {
-    // Метка 3:00 (60% шкалы)
-    const am = a0 + 2 * Math.PI * 0.6;
+    // Метка первого сигнала
+    const am = a0 + 2 * Math.PI * (frac > 0 && frac < 1 ? frac : 0.6);
     ctx.fillStyle = marks >= 1 ? '#FFFFFF' : 'rgba(255,255,255,0.55)';
     ctx.beginPath();
     ctx.arc(C + R_REST * Math.cos(am), C + R_REST * Math.sin(am), 7, 0, 2 * Math.PI, false);
@@ -187,7 +187,7 @@ function drawMenu(ctx) {
  * Итог: кольцо зон пульса по краю — три дуги (восстановление / рабочая / пиковая),
  * длина пропорциональна времени в зоне; сверху — подложка кубка.
  */
-function drawSummary(ctx, zoneMs) {
+function drawSummary(ctx, zoneMs, detail) {
   const R = 212;
   const W = 10;
   const total = zoneMs ? zoneMs[0] + zoneMs[1] + zoneMs[2] : 0;
@@ -222,6 +222,9 @@ function drawSummary(ctx, zoneMs) {
       a += sweep + (parts > 1 ? gap : 0);
     }
   }
+  if (detail) {
+    return;   // второй экран итогов — без кубка
+  }
   // Подложка кубка (иконка — поверх, в разметке)
   const halo = ctx.createRadialGradient(C, 70, 26, C, 70, 52);
   halo.addColorStop(0, 'rgba(255,179,0,0.35)');
@@ -242,7 +245,7 @@ function drawSummary(ctx, zoneMs) {
 
 /**
  * opts: { scene: 'menu'|'ready'|'set'|'rest'|'restLate'|'panel'|'summary'|'paused',
- *         hrFrac, zone, restProgress, restMarks, zoneMs }
+ *         hrFrac, zone, restProgress, restMarks, restMarkFrac, zoneMs, detail }
  */
 export function drawScene(ctx, opts) {
   ctx.clearRect(0, 0, 466, 466);
@@ -257,7 +260,7 @@ export function drawScene(ctx, opts) {
     return;
   }
   if (scene === 'summary') {
-    drawSummary(ctx, opts.zoneMs);
+    drawSummary(ctx, opts.zoneMs, opts.detail);
     return;
   }
   if (scene === 'ready' || scene === 'set' || scene === 'paused') {
@@ -266,7 +269,7 @@ export function drawScene(ctx, opts) {
   }
   if (scene === 'rest' || scene === 'restLate') {
     hrArc(ctx, opts.hrFrac || 0, 8, zoneGlowColor(opts.zone), true);
-    restRing(ctx, opts.restProgress || 0, opts.restMarks || 0);
+    restRing(ctx, opts.restProgress || 0, opts.restMarks || 0, opts.restMarkFrac);
   }
 }
 

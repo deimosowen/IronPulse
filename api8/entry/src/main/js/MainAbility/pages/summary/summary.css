@@ -113,3 +113,153 @@
     font-weight: 800;
     color: #FFFFFF;
 }
+
+/* ---------- лента и второй экран ---------- */
+
+.vs {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 466px;
+    height: 466px;
+}
+
+.screen-t {
+    width: 466px;
+    height: 466px;
+}
+
+.more-hint {
+    position: absolute;
+    left: 224px;
+    top: 438px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
+}
+
+.d-title {
+    position: absolute;
+    left: 0px;
+    top: 52px;
+    width: 466px;
+    height: 22px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #B0BEC5;
+    text-align: center;
+}
+
+/* Строки упражнений: до 4 штук, 304×34, шаг 38, первая — top 86. */
+.ex-row {
+    position: absolute;
+    left: 81px;
+    width: 304px;
+    height: 34px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 17px;
+    background-color: rgba(255, 255, 255, 0.05);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ex-name {
+    font-size: 16px;
+    color: #CFD8DC;
+}
+
+.ex-stat {
+    font-size: 17px;
+}
+
+.ex-sets {
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFC94D;
+}
+
+.ex-avg {
+    font-size: 17px;
+    color: #FFFFFF;
+}
+
+/* Три карточки и три чипа зон: колонки по 100, зазор 4 → блок 308, слева 79. */
+.mini {
+    position: absolute;
+    width: 100px;
+    height: 62px;
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.05);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.m-1 {
+    left: 79px;
+}
+
+.m-2 {
+    left: 183px;
+}
+
+.m-3 {
+    left: 287px;
+}
+
+.d-cards {
+    top: 244px;
+}
+
+.mini-val {
+    font-size: 28px;
+}
+
+.zchip {
+    position: absolute;
+    top: 316px;
+    width: 100px;
+    height: 34px;
+    border-radius: 17px;
+    background-color: rgba(255, 255, 255, 0.05);
+    justify-content: center;
+    align-items: center;
+}
+
+.zdot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin-right: 7px;
+}
+
+.zd0 {
+    background-color: #00E676;
+}
+
+.zd1 {
+    background-color: #FFC400;
+}
+
+.zd2 {
+    background-color: #FF3D00;
+}
+
+.zval {
+    font-size: 21px;
+}
+
+.z-cap {
+    position: absolute;
+    left: 0px;
+    top: 356px;
+    width: 466px;
+    height: 18px;
+    font-size: 13px;
+    color: #90A4AE;
+    text-align: center;
+}

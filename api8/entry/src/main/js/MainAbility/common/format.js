@@ -65,5 +65,5 @@ export function plural(n, one, few, many) {
 }
 
 export function formatMinutes(ms) {
-  return Math.round(ms / 60000) + ' мин';
+  return '' + Math.round(ms / 60000);
 }

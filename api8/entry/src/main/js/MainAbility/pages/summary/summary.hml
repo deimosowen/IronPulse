@@ -1,45 +1,89 @@
 <!--
-  Экран 7: итог. Всё выровнено по центру экрана (233, 233) абсолютными координатами.
+  Экран 7: итог. Вертикальная лента: [итог] ↑свайп вверх↑ [подробно].
+  Всё выровнено по центру экрана (233, 233) абсолютными координатами.
   На canvas: свечение, кольцо зон пульса по краю (доли времени в зонах), подложка кубка.
   После «Готово» статистика сбрасывается.
 -->
 <stack class="screen">
     <canvas ref="bg" class="bg"></canvas>
+    <swiper class="vs" vertical="true" index="{{ page }}" loop="false" indicator="false" onchange="onPage">
 
-    <image class="trophy-icon" src="/common/icons/trophy.png"></image>
-    <text class="title">ТРЕНИРОВКА ЗАВЕРШЕНА</text>
-    <text class="num total">{{ total }}</text>
+        <!-- 1. Итог -->
+        <stack class="screen-t">
+            <image class="trophy-icon" src="/common/icons/trophy.png"></image>
+            <text class="title">{{ L.complete }}</text>
+            <text class="num total">{{ total }}</text>
 
-    <div class="cell c-left r-top">
-        <div class="cell-row">
-            <image class="cell-icon" src="/common/icons/repeat.png"></image>
-            <text class="num cell-val"><span class="cell-main">{{ sets }}</span><span class="cell-sub">{{ exText }}</span></text>
-        </div>
-        <text class="cell-cap">{{ setsWord }}</text>
-    </div>
-    <div class="cell c-right r-top">
-        <div class="cell-row">
-            <image class="cell-icon" src="/common/icons/flame.png"></image>
-            <text class="num cell-val">{{ kcal }}</text>
-        </div>
-        <text class="cell-cap">ккал</text>
-    </div>
-    <div class="cell c-left r-bottom">
-        <div class="cell-row">
-            <image class="cell-icon" src="/common/icons/heart_flat.png"></image>
-            <text class="num cell-val">{{ hrAvg }}</text>
-        </div>
-        <text class="cell-cap">ср. пульс</text>
-    </div>
-    <div class="cell c-right r-bottom">
-        <div class="cell-row">
-            <image class="cell-icon" src="/common/icons/pulse_red.png"></image>
-            <text class="num cell-val">{{ hrMax }}</text>
-        </div>
-        <text class="cell-cap">макс. пульс</text>
-    </div>
+            <div class="cell c-left r-top">
+                <div class="cell-row">
+                    <image class="cell-icon" src="/common/icons/repeat.png"></image>
+                    <text class="num cell-val"><span class="cell-main">{{ sets }}</span><span class="cell-sub">{{ exText }}</span></text>
+                </div>
+                <text class="cell-cap">{{ setsWord }}</text>
+            </div>
+            <div class="cell c-right r-top">
+                <div class="cell-row">
+                    <image class="cell-icon" src="/common/icons/flame.png"></image>
+                    <text class="num cell-val">{{ kcal }}</text>
+                </div>
+                <text class="cell-cap">{{ L.kcal }}</text>
+            </div>
+            <div class="cell c-left r-bottom">
+                <div class="cell-row">
+                    <image class="cell-icon" src="/common/icons/heart_flat.png"></image>
+                    <text class="num cell-val">{{ hrAvg }}</text>
+                </div>
+                <text class="cell-cap">{{ L.avgHr }}</text>
+            </div>
+            <div class="cell c-right r-bottom">
+                <div class="cell-row">
+                    <image class="cell-icon" src="/common/icons/pulse_red.png"></image>
+                    <text class="num cell-val">{{ hrMax }}</text>
+                </div>
+                <text class="cell-cap">{{ L.maxHr }}</text>
+            </div>
 
-    <div class="done" onclick="close">
-        <text class="done-text">Готово</text>
-    </div>
+            <div class="done" onclick="close">
+                <text class="done-text">{{ L.done }}</text>
+            </div>
+            <image class="more-hint" src="/common/icons/chevron_up.png"></image>
+        </stack>
+
+        <!-- 2. Подробно -->
+        <stack class="screen-t">
+            <text class="d-title">{{ L.details }}</text>
+
+            <div class="ex-row" for="{{ rows }}" tid="key" style="top: {{ $item.top }}px;">
+                <text class="ex-name">{{ $item.name }}</text>
+                <text class="ex-stat"><span class="ex-sets">{{ $item.sets }}</span><span class="ex-avg">{{ $item.avg }}</span></text>
+            </div>
+
+            <div class="mini m-1 d-cards">
+                <text class="num mini-val">{{ avgSet }}</text>
+                <text class="cell-cap">{{ L.avgSet }}</text>
+            </div>
+            <div class="mini m-2 d-cards">
+                <text class="num mini-val">{{ avgRest }}</text>
+                <text class="cell-cap">{{ L.avgRest }}</text>
+            </div>
+            <div class="mini m-3 d-cards">
+                <text class="num mini-val">{{ recovery }}</text>
+                <text class="cell-cap">{{ L.recovery }}</text>
+            </div>
+
+            <div class="zchip m-1">
+                <div class="zdot zd0"></div>
+                <text class="num zval">{{ zone0 }}</text>
+            </div>
+            <div class="zchip m-2">
+                <div class="zdot zd1"></div>
+                <text class="num zval">{{ zone1 }}</text>
+            </div>
+            <div class="zchip m-3">
+                <div class="zdot zd2"></div>
+                <text class="num zval">{{ zone2 }}</text>
+            </div>
+            <text class="z-cap">{{ L.zonesTitle }}</text>
+        </stack>
+    </swiper>
 </stack>

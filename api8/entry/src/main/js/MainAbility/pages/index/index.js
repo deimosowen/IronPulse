@@ -1,6 +1,7 @@
 import router from '@system.router';
 import featureAbility from '@ohos.ability.featureAbility';
 import { drawScene } from '../../common/draw.js';
+import { useLang, strings } from '../../common/i18n.js';
 
 function pad2(n) {
     return n < 10 ? '0' + n : '' + n;
@@ -10,10 +11,13 @@ export default {
     data: {
         clock: '',
         hrText: '- -',
-        starting: false
+        starting: false,
+        L: {}
     },
 
     onInit() {
+        useLang(this.$app.$def.lang);
+        this.L = strings();
         this.checked = false;
         this.timer = null;
     },

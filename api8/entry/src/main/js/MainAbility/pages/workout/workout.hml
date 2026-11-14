@@ -9,7 +9,7 @@
         <!-- Панель (свайп вниз) -->
         <div class="page">
             <text class="numsemi now">{{ nowText }}</text>
-            <text class="eyebrow p-eyebrow">ТРЕНИРОВКА</text>
+            <text class="eyebrow p-eyebrow">{{ L.workout }}</text>
             <div class="p-top">
                 <text class="numsemi p-time">{{ timeText }}</text>
                 <div class="sep"></div>
@@ -20,7 +20,7 @@
                     <div class="round pause-btn" onclick="togglePause">
                         <image class="round-icon" src="{{ paused ? '/common/icons/play_light.png' : '/common/icons/pause.png' }}"></image>
                     </div>
-                    <text class="p-label">{{ paused ? 'Продолжить' : 'Пауза' }}</text>
+                    <text class="p-label">{{ paused ? L.resume : L.pause }}</text>
                 </div>
                 <div class="p-col">
                     <stack class="stop-wrap" ontouchstart="finishDown" ontouchend="finishUp" ontouchcancel="finishUp">
@@ -29,15 +29,15 @@
                             <image class="round-icon" src="/common/icons/stop.png"></image>
                         </div>
                     </stack>
-                    <text class="p-label stop-label">Завершить</text>
+                    <text class="p-label stop-label">{{ L.finish }}</text>
                 </div>
             </div>
             <div class="newex {{ pendingNew ? 'newex-on' : '' }}" onclick="markNew">
                 <image class="newex-icon" src="{{ pendingNew ? '/common/icons/next_dark.png' : '/common/icons/next_amber.png' }}"></image>
-                <text class="newex-text {{ pendingNew ? 'newex-text-on' : '' }}">{{ pendingNew ? 'Дальше — новое упр.' : 'Новое упражнение' }}</text>
+                <text class="newex-text {{ pendingNew ? 'newex-text-on' : '' }}">{{ pendingNew ? L.nextNew : L.newExercise }}</text>
             </div>
             <image class="chev" src="/common/icons/chevron_up.png"></image>
-            <text class="hint">{{ finishHold > 0 ? 'держите…' : 'завершить — удерживайте' }}</text>
+            <text class="hint">{{ finishHold > 0 ? L.holding : L.holdToFinish }}</text>
         </div>
 
         <!-- Основной экран -->
@@ -46,12 +46,12 @@
 
             <!-- Готов -->
             <div class="col" if="{{ phase === 'ready' }}">
-                <text class="eyebrow r-eyebrow">{{ paused ? 'НА ПАУЗЕ' : 'ТРЕНИРОВКА' }}</text>
+                <text class="eyebrow r-eyebrow">{{ paused ? L.paused : L.workout }}</text>
                 <text class="numsemi r-total {{ paused ? 'dim' : '' }}">{{ timeText }}</text>
                 <div class="r-hr">
                     <image class="r-heart" src="/common/icons/heart.png"></image>
                     <text class="num r-hr-num">{{ hrText }}</text>
-                    <text class="label r-unit">уд/мин</text>
+                    <text class="label r-unit">{{ L.bpm }}</text>
                 </div>
                 <div class="r-pills">
                     <div class="pill zone-pill {{ zoneClass }}">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="pill zone-pill kcal-pill">
                         <image class="pill-icon" src="/common/icons/flame.png"></image>
-                        <text class="pill-text txt-kcal">{{ kcalText }} ккал</text>
+                        <text class="pill-text txt-kcal">{{ kcalText }} {{ L.kcal }}</text>
                     </div>
                 </div>
             </div>
@@ -76,14 +76,14 @@
                     <text class="numsemi t-kcal">{{ kcalText }}</text>
                 </div>
                 <div class="set-chip">
-                    <text class="chip-ex">УПР {{ exercise }}</text>
+                    <text class="chip-ex">{{ L.ex }} {{ exercise }}</text>
                     <div class="chip-dot"></div>
-                    <text class="chip-set">ПОДХОД {{ setNumber }}</text>
+                    <text class="chip-set">{{ L.set }} {{ setNumber }}</text>
                 </div>
                 <text class="num s-timer {{ paused ? 'dim' : '' }}">{{ phaseText }}</text>
                 <div class="zone-line">
                     <div class="dot {{ zoneDot }}"></div>
-                    <text class="pill-text {{ zoneText }}">{{ paused ? 'на паузе' : zoneName }}</text>
+                    <text class="pill-text {{ zoneText }}">{{ paused ? L.pausedPill : zoneName }}</text>
                 </div>
             </div>
 

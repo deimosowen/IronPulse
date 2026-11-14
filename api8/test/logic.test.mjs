@@ -285,3 +285,68 @@ test('vibration off silences engine', () => {
   advance(400_000);
   assert.deepEqual(vibes, []);
 });
+
+test('rest marks come from the profile; ring scale follows the second mark', () => {
+  E.setProfile({ restMark1Sec: 90, restMark2Sec: 150 });
+  E.start();
+  E.startSet();
+  E.finishSet();
+  vibes = [];
+  assert.equal(restAlarm, 90_000);
+  let v = E.view();
+  assert.equal(v.restLastMarkMs, 150_000);
+  assert.equal(v.restMarkFrac, 0.6);
+  advance(75_000);
+  assert.equal(E.view().restProgress, 0.5);
+  advance(15_000);
+  assert.deepEqual(vibes, ['short1']);
+  // смена настроек во время отдыха не сдвигает текущие отметки
+  E.setProfile({ restMark1Sec: 300, restMark2Sec: 600 });
+  advance(60_000);
+  assert.deepEqual(vibes, ['short1', 'short2']);
+  // а в следующем отдыхе — уже новые
+  E.startSet();
+  E.finishSet();
+  assert.equal(restAlarm, 300_000);
+  // некорректные значения нормализуются
+  assert.deepEqual(E.markMsFromProfile({ restMark1Sec: 10, restMark2Sec: 20 }), [30_000, 60_000]);
+});
+
+test('summary details: per exercise, avg rest, HR recovery', () => {
+  E.start();
+  hr = 140;
+  E.startSet();
+  advance(30_000);
+  E.finishSet();
+  hr = 100;
+  advance(60_000);
+  E.startSet();
+  advance(50_000);
+  hr = 150;
+  E.finishSet();
+  hr = 120;
+  advance(120_000);
+  E.startSet(true);
+  advance(20_000);
+  const s = E.finish();
+  assert.equal(s.perExercise.length, 2);
+  assert.deepEqual(s.perExercise.map((e) => [e.exercise, e.sets, e.avgSetMs]), [[1, 2, 40_000], [2, 1, 20_000]]);
+  assert.equal(s.rests, 2);
+  assert.equal(s.avgRestMs, 90_000);
+  assert.equal(s.avgRecovery, 35, '(140-100 + 150-120) / 2');
+});
+
+test('i18n: ru/en picked from locale, plural forms', async () => {
+  const I = await load('i18n.js');
+  I.useLang('ru-RU');
+  assert.equal(I.t('startSet'), 'Начать подход');
+  assert.deepEqual([1, 3, 5, 11, 21].map((n) => I.tp('sets', n)), ['подход', 'подхода', 'подходов', 'подходов', 'подход']);
+  I.useLang('en');
+  assert.equal(I.t('startSet'), 'Start set');
+  assert.deepEqual([1, 2, 0].map((n) => I.tp('sets', n)), ['set', 'sets', 'sets']);
+  I.useLang('de');
+  assert.equal(I.getLang(), 'en', 'anything but Russian → English');
+  const ru = Object.keys((I.useLang('ru'), I.strings())).sort();
+  const en = Object.keys((I.useLang('en'), I.strings())).sort();
+  assert.deepEqual(en, ru, 'both dictionaries have the same keys');
+});

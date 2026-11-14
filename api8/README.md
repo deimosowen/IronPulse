@@ -30,7 +30,7 @@ export PATH="<Node.js 18>:$JAVA_HOME/bin:$PATH"
 env 'npm_config_@ohos:registry=https://repo.harmonyos.com/npm/' \
   node node_modules/@ohos/hvigor/bin/hvigor.js --mode module -p module=entry@default -p product=default \
   assembleHap --no-daemon
-node --test test                  # engine unit tests (pure JS, Node.js)
+node --test test                  # engine unit tests (pure JS, Node.js); also run by GitHub Actions
 ```
 
 Output: `entry/build/default/outputs/default/entry-default-signed.hap` (or `-unsigned` without a signing config).
@@ -67,6 +67,7 @@ entry/src/main/js/MainAbility/
 ├─ common/draw.js         canvas: phase glows, HR arc, rest ring, hold ring
 ├─ common/platform.js     heart rate, haptics, keep-screen-on, backup reminder
 ├─ common/store.js        profile + current-session cache (@system.file)
+├─ common/i18n.js         Russian / English strings, picked from the watch locale
 ├─ common/icons, fonts    96 px PNG icons, Barlow Condensed (OFL)
 └─ pages/                 index (menu) | workout | summary | settings
 entry/shell/              custom Android shell activity (blocks dismissing during a workout)
@@ -88,3 +89,6 @@ docs/SPEC.md              product spec
   watch's SensorService fails to clean up the dead client (`ProcessDeathObserver pid is -1`), the
   subscription leaks and the green HR LED stays on until the watch is rebooted. Close the app normally
   (finish the workout → *Done* → swipe out of the menu) before reinstalling.
+- **Testing on the charger is misleading**: on a (wireless) charger the system's charging screen
+  (`com.huawei.watch.charge`) pops over the app on wake and then falls back to the watch face, so the
+  workout screen seems to "turn off". Off the charger the keep-screen-on flag works as intended.

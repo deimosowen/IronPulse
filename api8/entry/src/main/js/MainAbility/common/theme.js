@@ -55,4 +55,3 @@ export function hrFraction(hr) {
   return (v - HR.GAUGE_MIN) / (HR.GAUGE_MAX - HR.GAUGE_MIN);
 }
 
-export const ZONE_NAMES = ['Восстановление', 'Рабочая зона', 'Пиковая нагрузка'];

@@ -1,7 +1,8 @@
 import router from '@system.router';
-import { formatClock, formatHms, plural } from '../../common/format.js';
-import { hrFraction, ZONE_NAMES } from '../../common/theme.js';
+import { formatClock, formatHms } from '../../common/format.js';
+import { hrFraction } from '../../common/theme.js';
 import { drawScene, drawHoldRing } from '../../common/draw.js';
+import { useLang, strings, t, tp } from '../../common/i18n.js';
 
 const V_PANEL = 0;
 const V_MAIN = 1;
@@ -21,13 +22,13 @@ export default {
         timeText: '00:00:00',
         phaseText: '0:00',
         hrText: '- -',
-        zoneName: 'Пульс не определён',
+        zoneName: '',
         zoneClass: 'zonex-pill',
         zoneDot: 'zonex-dot',
         zoneText: 'zonex-text',
         exercise: 1,
         setNumber: 1,
-        restEyebrow: 'ОТДЫХ',
+        restEyebrow: '',
         restLate: false,
         markText: '',
         kcalText: '0',
@@ -37,17 +38,22 @@ export default {
         pendingNew: false,
         ctaClass: 'cta-amber',
         ctaIcon: '/common/icons/dumbbell_amber.png',
-        ctaLabel: 'Начать подход',
+        ctaLabel: '',
         ctaTextClass: 'dark-amber',
         holdW: 0,
         finishHold: 0,
         dim: false,
         dimSet: false,
         dimLabel: '',
-        dimSub: ''
+        dimSub: '',
+        L: {}
     },
 
     onInit() {
+        useLang(this.$app.$def.lang);
+        this.L = strings();
+        this.zoneName = t('noHr');
+        this.ctaLabel = t('startSet');
         this.engine = this.$app.$def.engine;
         this.platform = this.$app.$def.platform;
         this.v = null;
@@ -61,6 +67,16 @@ export default {
     },
 
     onShow() {
+        // Флаг «не гасить экран» относится к окну: на холодном старте первый вызов может
+        // прийти до показа страницы и потеряться — ставим его заново, когда экран виден.
+        if (this.engine.isActive()) {
+            this.platform.keepScreenOn(true, true);
+            setTimeout(() => {
+                if (this.engine.isActive() && !this.leaving) {
+                    this.platform.keepScreenOn(true, true);
+                }
+            }, 1000);
+        }
         this.platform.disarmReminder();
         this.touched();
         this.engine.tick();   // догнать время после сна экрана
@@ -134,16 +150,16 @@ export default {
         }
         this.dimSet = v.phase === 'set' && !v.paused;
         if (v.paused) {
-            this.dimLabel = 'ПАУЗА';
+            this.dimLabel = t('pausedShort');
             this.dimSub = '';
         } else if (v.phase === 'set') {
-            this.dimLabel = 'УПР ' + v.exercise + ' · ПОДХОД ' + v.setNumber;
+            this.dimLabel = t('ex') + ' ' + v.exercise + ' · ' + t('set') + ' ' + v.setNumber;
             this.dimSub = '';
         } else if (v.phase === 'rest') {
-            this.dimLabel = 'ОТДЫХ';
-            this.dimSub = v.restNextMarkMs > 0 ? 'сигнал ' + formatClock(v.restNextMarkMs) : 'больше 5 минут';
+            this.dimLabel = t('rest');
+            this.dimSub = this.markLine(v);
         } else {
-            this.dimLabel = 'ТРЕНИРОВКА';
+            this.dimLabel = t('workout');
             this.dimSub = '';
         }
         this.v = v;
@@ -155,7 +171,7 @@ export default {
         this.phaseText = formatClock(v.phaseMs);
         this.hrText = v.hr > 0 ? '' + v.hr : '- -';
         const z = v.zone >= 0 ? '' + v.zone : 'x';
-        this.zoneName = v.zone >= 0 ? ZONE_NAMES[v.zone] : 'Пульс не определён';
+        this.zoneName = v.zone >= 0 ? t('zones')[v.zone] : t('noHr');
         this.zoneClass = 'zone' + z + '-pill';
         this.zoneDot = 'zone' + z + '-dot';
         this.zoneText = 'zone' + z + '-text';
@@ -165,19 +181,24 @@ export default {
         this.kcalText = '' + Math.round(v.calories);
         this.pendingNew = v.pendingNewExercise;
         if (v.phase === 'rest') {
-            this.restEyebrow = 'ОТДЫХ · УПР ' + v.exercise + ' · ПОДХОД ' + v.setNumber;
-            this.markText = v.restNextMarkMs > 0 ? 'сигнал ' + formatClock(v.restNextMarkMs) : 'больше 5 минут';
+            this.restEyebrow = t('rest') + ' · ' + t('ex') + ' ' + v.exercise + ' · ' + t('set') + ' ' + v.setNumber;
+            this.markText = this.markLine(v);
             this.showDrop = v.hrDrop > 0;
-            this.dropText = '−' + v.hrDrop + ' уд';
+            this.dropText = '−' + v.hrDrop + t('drop');
         }
         const ex = v.exercises;
         this.countText = ex > 0
-            ? ex + ' упр · ' + v.totalSets + ' ' + plural(v.totalSets, 'подход', 'подхода', 'подходов')
-            : 'подходов нет';
+            ? ex + t('exShort') + ' · ' + v.totalSets + ' ' + tp('sets', v.totalSets)
+            : t('noSets');
         if (this.ctaTimer === null) {
             this.applyCta();
         }
         this.paint();
+    },
+
+    /** «сигнал 3:00» до последней отметки, потом «дольше 5:00». */
+    markLine(v) {
+        return v.restNextMarkMs > 0 ? t('alertAt') + formatClock(v.restNextMarkMs) : t('past') + formatClock(v.restLastMarkMs);
     },
 
     applyCta() {
@@ -186,13 +207,13 @@ export default {
             return;
         }
         if (v.paused) {
-            this.setCta('cta-amber', '/common/icons/play.png', 'Продолжить', 'dark-amber');
+            this.setCta('cta-amber', '/common/icons/play.png', t('resume'), 'dark-amber');
         } else if (v.phase === 'set') {
-            this.setCta('cta-white', '/common/icons/check_badge.png', 'Завершить подход', 'dark-ink');
+            this.setCta('cta-white', '/common/icons/check_badge.png', t('finishSet'), 'dark-ink');
         } else if (v.phase === 'rest' && v.restMarks < 2) {
-            this.setCta('cta-blue', '/common/icons/dumbbell_blue.png', 'Начать подход', 'dark-ice');
+            this.setCta('cta-blue', '/common/icons/dumbbell_blue.png', t('startSet'), 'dark-ice');
         } else {
-            this.setCta('cta-amber', '/common/icons/dumbbell_amber.png', 'Начать подход', 'dark-amber');
+            this.setCta('cta-amber', '/common/icons/dumbbell_amber.png', t('startSet'), 'dark-amber');
         }
     },
 
@@ -226,7 +247,8 @@ export default {
             hrFrac: v !== null ? hrFraction(v.hr) : 0,
             zone: v !== null ? v.zone : -1,
             restProgress: v !== null ? v.restProgress : 0,
-            restMarks: v !== null ? v.restMarks : 0
+            restMarks: v !== null ? v.restMarks : 0,
+            restMarkFrac: v !== null ? v.restMarkFrac : 0.6
         });
     },
 
@@ -250,7 +272,7 @@ export default {
             }
             const f = Math.min(1, (el - TAP_MAX_MS) / (HOLD_NEW_MS - TAP_MAX_MS));
             this.holdW = Math.round(CTA_H + (CTA_W - CTA_H) * f);
-            this.setCta(this.ctaClass, '/common/icons/next_dark.png', 'Новое упражнение', 'dark-amber');
+            this.setCta(this.ctaClass, '/common/icons/next_dark.png', t('newExercise'), 'dark-amber');
             if (el >= HOLD_NEW_MS) {
                 this.ctaFired = true;
                 this.stopCta();

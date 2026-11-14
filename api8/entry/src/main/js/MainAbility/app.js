@@ -1,6 +1,15 @@
 import * as engine from './common/engine.js';
 import store from './common/store.js';
 import * as platform from './common/platform.js';
+import configuration from '@system.configuration';
+import { useLang, getLang } from './common/i18n.js';
+
+// Язык интерфейса — из системной локали часов (русский или английский).
+try {
+  useLang(configuration.getLocale().language);
+} catch (e) {
+  useLang('ru');
+}
 
 /**
  * В модели FA каждая страница — отдельный бандл, поэтому общее состояние
@@ -29,6 +38,7 @@ export default {
   engine: engine,
   store: store,
   platform: platform,
+  lang: getLang(),
 
   onCreate() {
     store.ready().then(() => {

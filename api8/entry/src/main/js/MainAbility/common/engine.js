@@ -8,18 +8,23 @@ import { zoneOf } from './theme.js';
  * Время — по wall-clock с учётом пауз: если процесс заморозили (экран погас),
  * при следующем tick() пропущенное время докручивается.
  *
- * Отдых считается ВПЕРЁД, без цели. Сигналы: 3:00 — одна короткая вибрация, 5:00 — две короткие.
+ * Отдых считается ВПЕРЁД, без цели. Сигналы (по умолчанию 3:00 и 5:00, задаются в настройках):
+ * первый — одна короткая вибрация, второй — две короткие.
  * Упражнения: удержание «Начать подход» или кнопка в панели начинают новое упражнение.
  */
 
-/** Отметки отдыха. Последняя задаёт шкалу кольца отдыха. */
-export const REST_MARKS = [{ ms: 180000, kind: 'short1' }, { ms: 300000, kind: 'short2' }];
-export const REST_SCALE_MS = REST_MARKS[REST_MARKS.length - 1].ms;
+/** Отметки отдыха по умолчанию (секунды); задаются в настройках. Вторая задаёт шкалу кольца. */
+export const DEFAULT_MARK1_SEC = 180;
+export const DEFAULT_MARK2_SEC = 300;
+const MARK_KINDS = ['short1', 'short2'];
 const AUTOSAVE_MS = 15000;
 const MAX_CATCHUP_MS = 10 * 60 * 1000;
 
 export function defaultProfile() {
-  return { weightKg: 80, age: 30, sex: 'male', vibration: true, configured: false };
+  return {
+    weightKg: 80, age: 30, sex: 'male', vibration: true, configured: false,
+    restMark1Sec: DEFAULT_MARK1_SEC, restMark2Sec: DEFAULT_MARK2_SEC
+  };
 }
 
 const noop = () => {};
@@ -54,6 +59,18 @@ export function getProfile() {
   return profile;
 }
 
+/** Отметки отдыха (мс) из профиля: строго возрастают, минимум 30 с между ними. */
+export function markMsFromProfile(p) {
+  const m1 = Math.max(30, Math.round(p.restMark1Sec || DEFAULT_MARK1_SEC));
+  const m2 = Math.max(m1 + 30, Math.round(p.restMark2Sec || DEFAULT_MARK2_SEC));
+  return [m1 * 1000, m2 * 1000];
+}
+
+function marks() {
+  const ms = session !== null && session.markMs ? session.markMs : markMsFromProfile(profile);
+  return ms.map((m, i) => ({ ms: m, kind: MARK_KINDS[i] }));
+}
+
 export function isActive() {
   return session !== null;
 }
@@ -81,7 +98,8 @@ export function start() {
     setInExercise: 0,
     totalSets: 0,
     pendingNewExercise: false,
-    restMarks: 0,             // сколько отметок REST_MARKS уже отработано в текущем отдыхе
+    restMarks: 0,             // сколько отметок отдыха уже отработано в текущем отдыхе
+    markMs: markMsFromProfile(profile),
     restHrStart: 0,
     calories: 0,
     hrSum: 0,
@@ -152,10 +170,11 @@ function phaseMs() {
 
 function nextMarkIn() {
   const s = session;
-  if (s.phase !== 'rest' || s.restMarks >= REST_MARKS.length) {
+  const m = marks();
+  if (s.phase !== 'rest' || s.restMarks >= m.length) {
     return -1;
   }
-  return REST_MARKS[s.restMarks].ms - phaseMs();
+  return m[s.restMarks].ms - phaseMs();
 }
 
 /** ~1 с, выровнено по секунде фазового таймера; в отдыхе — точно к отметке. */
@@ -211,8 +230,9 @@ export function tick() {
     if (s.phase === 'rest') {
       // После долгой «заморозки» отрабатываем только последнюю пройденную отметку и только если она свежая.
       let fired = null;
-      while (s.restMarks < REST_MARKS.length && phaseMs() >= REST_MARKS[s.restMarks].ms) {
-        fired = REST_MARKS[s.restMarks];
+      const m = marks();
+      while (s.restMarks < m.length && phaseMs() >= m[s.restMarks].ms) {
+        fired = m[s.restMarks];
         s.restMarks += 1;
       }
       if (fired !== null) {
@@ -305,6 +325,7 @@ export function finishSet() {
   s.phaseStartMs = s.elapsedMs;
   s.phaseAcc = emptyAcc();
   s.restMarks = 0;
+  s.markMs = markMsFromProfile(profile);   // отметки фиксируются на весь отдых
   const hr = deps.heartRate();
   s.restHrStart = hr > 0 ? hr : 0;
   vibrate('tap');
@@ -388,6 +409,24 @@ export function close() {
 export function buildSummary(s) {
   const workMs = s.sets.reduce((a, x) => a + x.durMs, 0);
   const restMs = s.rests.reduce((a, x) => a + x.durMs, 0);
+  // Разбивка по упражнениям
+  const perExercise = [];
+  s.sets.forEach((x) => {
+    let e = perExercise[perExercise.length - 1];
+    if (!e || e.exercise !== x.exercise) {
+      e = { exercise: x.exercise, sets: 0, workMs: 0 };
+      perExercise.push(e);
+    }
+    e.sets += 1;
+    e.workMs += x.durMs;
+  });
+  perExercise.forEach((e) => {
+    e.avgSetMs = Math.round(e.workMs / e.sets);
+  });
+  // Восстановление: на сколько ударов падает пульс за отдых (только отдыхи с пульсом в начале и в конце)
+  const rec = s.rests.filter((r) => r.hrStart > 0 && r.hrEnd > 0);
+  const avgRecovery = rec.length > 0
+    ? Math.round(rec.reduce((a, r) => a + (r.hrStart - r.hrEnd), 0) / rec.length) : 0;
   return {
     durationMs: s.elapsedMs,
     pausedMs: s.pausedMs,
@@ -400,7 +439,10 @@ export function buildSummary(s) {
     workMs: workMs,
     restMs: restMs,
     avgSetMs: s.sets.length > 0 ? Math.round(workMs / s.sets.length) : 0,
-    avgRestMs: s.rests.length > 0 ? Math.round(restMs / s.rests.length) : 0
+    avgRestMs: s.rests.length > 0 ? Math.round(restMs / s.rests.length) : 0,
+    rests: s.rests.length,
+    perExercise: perExercise,
+    avgRecovery: avgRecovery
   };
 }
 
@@ -422,6 +464,7 @@ export function view() {
   const pm = phaseMs();
   const nextIsNew = s.pendingNewExercise || s.exercise === 0;
   const resting = s.phase === 'rest';
+  const mk = marks();
   return {
     active: true,
     finished: s.finished,
@@ -438,9 +481,11 @@ export function view() {
     pendingNewExercise: s.pendingNewExercise,
     totalSets: s.totalSets,
     exercises: s.exercise,
-    restMarks: resting ? s.restMarks : 0,             // 0 — до 3:00, 1 — после 3:00, 2 — после 5:00
-    restNextMarkMs: resting && s.restMarks < REST_MARKS.length ? REST_MARKS[s.restMarks].ms : 0,
-    restProgress: resting ? Math.min(1, pm / REST_SCALE_MS) : 0,
+    restMarks: resting ? s.restMarks : 0,             // 0 — до сигнала 1, 1 — после него, 2 — после сигнала 2
+    restNextMarkMs: resting && s.restMarks < mk.length ? mk[s.restMarks].ms : 0,
+    restLastMarkMs: mk[mk.length - 1].ms,
+    restMarkFrac: mk[0].ms / mk[mk.length - 1].ms,    // где метка сигнала 1 на кольце
+    restProgress: resting ? Math.min(1, pm / mk[mk.length - 1].ms) : 0,
     hrDrop: resting && s.restHrStart > 0 && hr > 0 ? s.restHrStart - hr : 0,
     calories: s.calories
   };

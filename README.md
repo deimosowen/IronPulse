@@ -9,6 +9,11 @@
   a dim always-on workout screen and haptic rest signals. Built for the round 466×466 AMOLED of the Watch 4 Pro.
 </p>
 
+<p align="center">
+  <a href="https://github.com/deimosowen/IronPulse/actions/workflows/test.yml"><img src="https://github.com/deimosowen/IronPulse/actions/workflows/test.yml/badge.svg" alt="tests"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license"></a>
+</p>
+
 <table align="center">
   <tr>
     <td align="center"><img src="docs/screenshots/01-menu.png" width="190" alt="Menu"><br><sub>Menu</sub></td>
@@ -23,14 +28,21 @@
     <td align="center"><img src="docs/screenshots/08-panel.png" width="190" alt="Workout panel"><br><sub>Panel (swipe down)</sub></td>
   </tr>
   <tr>
-    <td></td>
     <td align="center"><img src="docs/screenshots/09-summary.png" width="190" alt="Summary"><br><sub>Summary</sub></td>
+    <td align="center"><img src="docs/screenshots/11-summary-details.png" width="190" alt="Summary details"><br><sub>Summary details (swipe up)</sub></td>
     <td align="center"><img src="docs/screenshots/10-settings.png" width="190" alt="Settings"><br><sub>Settings</sub></td>
+    <td align="center"><img src="docs/screenshots/12-settings-signals.png" width="190" alt="Rest signal settings"><br><sub>Rest signal settings</sub></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td align="center"><img src="docs/screenshots/13-english-rest.png" width="190" alt="English UI, rest"><br><sub>English UI — rest</sub></td>
+    <td align="center"><img src="docs/screenshots/14-english-summary.png" width="190" alt="English UI, summary"><br><sub>English UI — summary</sub></td>
     <td></td>
   </tr>
 </table>
 
-> Screenshots are taken from a real Huawei Watch 4 Pro (worn off-wrist, hence no heart rate). The UI language is Russian.
+> Screenshots are taken from a real Huawei Watch 4 Pro (worn off-wrist, hence no heart rate).
+> The UI follows the watch language: Russian, or English for any other locale.
 
 ## Why
 
@@ -42,13 +54,17 @@ actually glance at between sets.
 
 - **Set ↔ rest loop** — one big button: *Start set* → set timer → *Finish set* → rest timer → …
 - **Exercises** — hold *Start set* for 1.5 s (or use the panel) to start a new exercise; screens show *EX 2 · SET 3*.
-- **Rest signals** — counts up with no target; one short pulse at 3:00, two at 5:00.
+- **Rest signals** — counts up with no target; one short pulse at the first signal, two at the second
+  (3:00 and 5:00 by default, adjustable in 30 s steps in Settings). The rest ring scales to the second signal.
 - **Heart rate** — 1 Hz sensor, a gradient arc whose length is your HR and colour is your zone
   (`<110` recovery, `110–145` working, `>145` peak), plus calories (Keytel formula) next to it.
 - **Always-on dim mode** — the screen never drops to the watch face during a workout; after 8 s it dims to
   near-black with the clock and timer in exactly the same place, and wakes on a tap or a rest signal.
 - **Can't be dismissed by accident** — swipe-right and Back are blocked from *Start* until *Done*.
 - **Crash-safe** — the session is cached; after an app or watch restart the workout resumes where it was.
+- **Summary details** — swipe up on the summary: sets and average set time per exercise, average set and rest,
+  average heart-rate drop during rest, time in each HR zone.
+- **Russian and English** — picked from the watch system language.
 - **No history by design** — statistics (per set, per rest, zones) are collected for the summary and then discarded.
 
 ## Repository layout

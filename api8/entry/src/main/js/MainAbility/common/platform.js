@@ -4,6 +4,7 @@ import vibratorMs from '@ohos.vibrator';
 import runningLock from '@ohos.runningLock';
 import reminderAgent from '@ohos.reminderAgent';
 import brightness from '@system.brightness';
+import { t } from './i18n.js';
 
 /**
  * Платформенный слой для часов на HarmonyOS 3 (API 8, JS FA):
@@ -152,17 +153,21 @@ export function vibrate(kind) {
 let screenHeld = false;
 
 /** Не гасить экран (во время отдыха: иначе система заморозит приложение и сигналы не прозвучат). */
-export function keepScreenOn(on) {
-  if (screenHeld === on) {
+export function keepScreenOn(on, force) {
+  if (screenHeld === on && !force) {
     return;
   }
   screenHeld = on;
   try {
     brightness.setKeepScreenOn({
       keepScreenOn: on,
-      fail: (data, code) => console.warn('IronPulse keepScreenOn failed: ' + code)
+      fail: (data, code) => {
+        screenHeld = null;     // повторим при следующем вызове
+        console.warn('IronPulse keepScreenOn failed: ' + code);
+      }
     });
   } catch (e) {
+    screenHeld = null;
     console.warn('IronPulse keepScreenOn: ' + e);
   }
 }
@@ -193,7 +198,7 @@ export function armReminder() {
       reminderType: reminderAgent.ReminderType.REMINDER_TYPE_TIMER,
       triggerTimeInSeconds: Math.round(left / 1000),
       title: 'IronPulse',
-      content: 'Отдых — сигнал по времени',
+      content: t('reminder'),
       ringDuration: 1,
       // Поднять IronPulse на экран: приложение оживёт и само даст длинную вибрацию.
       wantAgent: { pkgName: 'com.ironpulse.watch', abilityName: 'com.ironpulse.watch.MainAbility' },

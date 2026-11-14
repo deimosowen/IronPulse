@@ -15,13 +15,13 @@
 
     <div class="start" onclick="start">
         <image class="start-icon" src="/common/icons/play.png"></image>
-        <text class="start-text">{{ starting ? '…' : 'СТАРТ' }}</text>
+        <text class="start-text">{{ starting ? '…' : L.start }}</text>
     </div>
 
     <div class="hr-chip">
         <image class="hr-icon" src="/common/icons/heart.png"></image>
         <text class="num hr-num">{{ hrText }}</text>
-        <text class="label hr-unit">уд/мин</text>
+        <text class="label hr-unit">{{ L.bpm }}</text>
     </div>
 
     <div class="settings" onclick="openSettings">

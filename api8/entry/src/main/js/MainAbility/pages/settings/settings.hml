@@ -4,8 +4,8 @@
     <list class="list" id="list" scrollbar="off" focusable="true">
         <list-item class="head">
             <div class="head-box">
-                <text class="title">{{ configured ? 'Настройки' : 'Профиль' }}</text>
-                <text class="caption" if="{{ !configured }}">нужен для расчёта калорий</text>
+                <text class="title">{{ configured ? L.settings : L.profile }}</text>
+                <text class="caption" if="{{ !configured }}">{{ L.profileHint }}</text>
             </div>
         </list-item>
 
@@ -22,20 +22,20 @@
 
         <list-item class="item">
             <div class="toggle" onclick="toggleSex">
-                <text class="toggle-label">Пол</text>
+                <text class="toggle-label">{{ L.sex }}</text>
                 <text class="toggle-value">{{ sexText }}</text>
             </div>
         </list-item>
         <list-item class="item">
             <div class="toggle" onclick="toggleVibration">
-                <text class="toggle-label">Вибрация</text>
-                <text class="toggle-value">{{ vibration ? 'Вкл' : 'Выкл' }}</text>
+                <text class="toggle-label">{{ L.vibration }}</text>
+                <text class="toggle-value">{{ vibration ? L.on : L.off }}</text>
             </div>
         </list-item>
 
         <list-item class="btn-item">
             <div class="save" onclick="save">
-                <text class="save-text">Сохранить</text>
+                <text class="save-text">{{ L.save }}</text>
             </div>
         </list-item>
         <list-item class="pad"><div></div></list-item>
