@@ -9,19 +9,28 @@
   a dim always-on workout screen and haptic rest signals. Built for the round 466×466 AMOLED of the Watch 4 Pro.
 </p>
 
-<p align="center">
-  <img src="docs/screenshots/01-menu.png" width="200" alt="Menu">
-  <img src="docs/screenshots/02-set.png" width="200" alt="Set">
-  <img src="docs/screenshots/03-rest.png" width="200" alt="Rest">
-  <img src="docs/screenshots/05-rest-dim.png" width="200" alt="Rest, dim mode">
-</p>
-<p align="center">
-  <img src="docs/screenshots/04-rest-over-5min.png" width="200" alt="Rest over 5 minutes">
-  <img src="docs/screenshots/06-panel.png" width="200" alt="Workout panel">
-  <img src="docs/screenshots/07-summary.png" width="200" alt="Summary">
-</p>
+<table align="center">
+  <tr>
+    <td align="center"><img src="docs/screenshots/01-menu.png" width="190" alt="Menu"><br><sub>Menu</sub></td>
+    <td align="center"><img src="docs/screenshots/02-ready.png" width="190" alt="Ready"><br><sub>Ready</sub></td>
+    <td align="center"><img src="docs/screenshots/03-set.png" width="190" alt="Set"><br><sub>Set</sub></td>
+    <td align="center"><img src="docs/screenshots/04-set-dim.png" width="190" alt="Set, dim mode"><br><sub>Set — dim mode</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/05-rest.png" width="190" alt="Rest"><br><sub>Rest</sub></td>
+    <td align="center"><img src="docs/screenshots/06-rest-dim.png" width="190" alt="Rest, dim mode"><br><sub>Rest — dim mode</sub></td>
+    <td align="center"><img src="docs/screenshots/07-rest-over-5min.png" width="190" alt="Rest over 5 minutes"><br><sub>Rest over 5 min</sub></td>
+    <td align="center"><img src="docs/screenshots/08-panel.png" width="190" alt="Workout panel"><br><sub>Panel (swipe down)</sub></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td align="center"><img src="docs/screenshots/09-summary.png" width="190" alt="Summary"><br><sub>Summary</sub></td>
+    <td align="center"><img src="docs/screenshots/10-settings.png" width="190" alt="Settings"><br><sub>Settings</sub></td>
+    <td></td>
+  </tr>
+</table>
 
-> Screenshots are taken from a real Huawei Watch 4 Pro. The UI language is Russian.
+> Screenshots are taken from a real Huawei Watch 4 Pro (worn off-wrist, hence no heart rate). The UI language is Russian.
 
 ## Why
 
