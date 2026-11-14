@@ -41,7 +41,8 @@
   </tr>
 </table>
 
-> Screenshots are taken from a real Huawei Watch 4 Pro (worn off-wrist, hence no heart rate).
+> Screenshots are taken from a real Huawei Watch 4 Pro. Most were shot off-wrist, hence no heart rate;
+> the two summary screens come from a workout on the wrist.
 > The UI follows the watch language: Russian, or English for any other locale.
 
 ## Why
