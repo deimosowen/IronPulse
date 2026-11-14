@@ -1,54 +1,45 @@
-<!-- Экран 7: итог. После «Готово» статистика сбрасывается. -->
+<!--
+  Экран 7: итог. Всё выровнено по центру экрана (233, 233) абсолютными координатами.
+  На canvas: свечение, кольцо зон пульса по краю (доли времени в зонах), подложка кубка.
+  После «Готово» статистика сбрасывается.
+-->
 <stack class="screen">
     <canvas ref="bg" class="bg"></canvas>
-    <div class="page">
-        <div class="trophy">
-            <image class="trophy-icon" src="/common/icons/trophy.png"></image>
+
+    <image class="trophy-icon" src="/common/icons/trophy.png"></image>
+    <text class="title">ТРЕНИРОВКА ЗАВЕРШЕНА</text>
+    <text class="num total">{{ total }}</text>
+
+    <div class="cell c-left r-top">
+        <div class="cell-row">
+            <image class="cell-icon" src="/common/icons/repeat.png"></image>
+            <text class="num cell-val"><span class="cell-main">{{ sets }}</span><span class="cell-sub">{{ exText }}</span></text>
         </div>
-        <text class="title">ТРЕНИРОВКА ЗАВЕРШЕНА</text>
-        <text class="num total">{{ total }}</text>
-        <div class="grid">
-            <div class="row">
-                <div class="cell">
-                    <image class="cell-icon" src="/common/icons/repeat.png"></image>
-                    <div class="cell-col">
-                        <text class="num cell-val"><span class="cell-main">{{ sets }}</span><span class="cell-sub">{{ exText }}</span></text>
-                        <text class="cell-cap">{{ setsWord }}</text>
-                    </div>
-                </div>
-                <div class="cell cell-gap">
-                    <image class="cell-icon" src="/common/icons/flame.png"></image>
-                    <div class="cell-col">
-                        <text class="num cell-val">{{ kcal }}</text>
-                        <text class="cell-cap">ккал</text>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-gap">
-                <div class="cell">
-                    <image class="cell-icon" src="/common/icons/heart_flat.png"></image>
-                    <div class="cell-col">
-                        <text class="num cell-val">{{ hrAvg }}</text>
-                        <text class="cell-cap">ср. пульс</text>
-                    </div>
-                </div>
-                <div class="cell cell-gap">
-                    <image class="cell-icon" src="/common/icons/pulse_red.png"></image>
-                    <div class="cell-col">
-                        <text class="num cell-val">{{ hrMax }}</text>
-                        <text class="cell-cap">макс. пульс</text>
-                    </div>
-                </div>
-            </div>
+        <text class="cell-cap">{{ setsWord }}</text>
+    </div>
+    <div class="cell c-right r-top">
+        <div class="cell-row">
+            <image class="cell-icon" src="/common/icons/flame.png"></image>
+            <text class="num cell-val">{{ kcal }}</text>
         </div>
-        <div class="zones">
-            <div class="z z0" style="flex-grow: {{ z0 }};" if="{{ z0 > 0 }}"></div>
-            <div class="z z1" style="flex-grow: {{ z1 }};" if="{{ z1 > 0 }}"></div>
-            <div class="z z2" style="flex-grow: {{ z2 }};" if="{{ z2 > 0 }}"></div>
-            <div class="z zx" style="flex-grow: 1;" if="{{ zEmpty }}"></div>
+        <text class="cell-cap">ккал</text>
+    </div>
+    <div class="cell c-left r-bottom">
+        <div class="cell-row">
+            <image class="cell-icon" src="/common/icons/heart_flat.png"></image>
+            <text class="num cell-val">{{ hrAvg }}</text>
         </div>
-        <div class="done" onclick="close">
-            <text class="done-text">Готово</text>
+        <text class="cell-cap">ср. пульс</text>
+    </div>
+    <div class="cell c-right r-bottom">
+        <div class="cell-row">
+            <image class="cell-icon" src="/common/icons/pulse_red.png"></image>
+            <text class="num cell-val">{{ hrMax }}</text>
         </div>
+        <text class="cell-cap">макс. пульс</text>
+    </div>
+
+    <div class="done" onclick="close">
+        <text class="done-text">Готово</text>
     </div>
 </stack>

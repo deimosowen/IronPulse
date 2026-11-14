@@ -18,7 +18,7 @@ const GLOWS = {
   rest: [[0.5, 0.44, 'rgba(41,121,255,0.34)', 'rgba(0,176,255,0.10)', 0.62]],
   restLate: [[0.5, 0.44, 'rgba(255,160,0,0.30)', 'rgba(41,121,255,0.10)', 0.64]],
   panel: [[0.70, 0.46, 'rgba(255,23,68,0.22)', null, 0.38], [0.5, 0.84, 'rgba(255,171,0,0.16)', null, 0.34]],
-  summary: [[0.5, 0.04, 'rgba(255,193,7,0.38)', 'rgba(255,143,0,0.10)', 0.52]],
+  summary: [[0.5, 0.15, 'rgba(255,193,7,0.30)', 'rgba(255,143,0,0.08)', 0.50]],
   paused: [[0.5, 0.5, 'rgba(144,164,174,0.16)', null, 0.55]]
 };
 
@@ -184,8 +184,65 @@ function drawMenu(ctx) {
 }
 
 /**
+ * Итог: кольцо зон пульса по краю — три дуги (восстановление / рабочая / пиковая),
+ * длина пропорциональна времени в зоне; сверху — подложка кубка.
+ */
+function drawSummary(ctx, zoneMs) {
+  const R = 212;
+  const W = 10;
+  const total = zoneMs ? zoneMs[0] + zoneMs[1] + zoneMs[2] : 0;
+  ctx.lineCap = 'round';
+  ctx.lineWidth = W;
+  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+  ctx.beginPath();
+  ctx.arc(C, C, R, 0, 2 * Math.PI, false);
+  ctx.stroke();
+  if (total > 0) {
+    const colors = [['#00C853', '#69F0AE', 'rgba(0,230,118,ALPHA)'],
+      ['#FFB300', '#FFD54F', 'rgba(255,171,0,ALPHA)'],
+      ['#FF3D00', '#FF6E40', 'rgba(255,61,0,ALPHA)']];
+    const gap = 0.10;                         // зазор между дугами, рад (с учётом скруглённых концов)
+    const parts = zoneMs.filter((ms) => ms > 0).length;
+    const free = 2 * Math.PI - (parts > 1 ? gap * parts : 0);
+    let a = -Math.PI / 2 + (parts > 1 ? gap / 2 : 0);
+    for (let z = 0; z < 3; z++) {
+      if (zoneMs[z] <= 0) {
+        continue;
+      }
+      const sweep = Math.max(0.0001, free * zoneMs[z] / total - (parts > 1 ? 0 : 0.0001));
+      glowStroke(ctx, a, a + sweep, R, W, colors[z][2]);
+      const g = ctx.createLinearGradient(C - R, C - R, C + R, C + R);
+      g.addColorStop(0, colors[z][1]);
+      g.addColorStop(1, colors[z][0]);
+      ctx.lineWidth = W;
+      ctx.strokeStyle = g;
+      ctx.beginPath();
+      ctx.arc(C, C, R, a, a + sweep, false);
+      ctx.stroke();
+      a += sweep + (parts > 1 ? gap : 0);
+    }
+  }
+  // Подложка кубка (иконка — поверх, в разметке)
+  const halo = ctx.createRadialGradient(C, 70, 26, C, 70, 52);
+  halo.addColorStop(0, 'rgba(255,179,0,0.35)');
+  halo.addColorStop(1, 'rgba(255,179,0,0)');
+  ctx.fillStyle = halo;
+  ctx.beginPath();
+  ctx.arc(C, 70, 52, 0, 2 * Math.PI, false);
+  ctx.fill();
+  const g = ctx.createRadialGradient(C - 9, 60, 4, C, 70, 30);
+  g.addColorStop(0, '#FFE082');
+  g.addColorStop(0.5, '#FFB300');
+  g.addColorStop(1, '#FF8F00');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(C, 70, 30, 0, 2 * Math.PI, false);
+  ctx.fill();
+}
+
+/**
  * opts: { scene: 'menu'|'ready'|'set'|'rest'|'restLate'|'panel'|'summary'|'paused',
- *         hrFrac, zone, restProgress, restMarks }
+ *         hrFrac, zone, restProgress, restMarks, zoneMs }
  */
 export function drawScene(ctx, opts) {
   ctx.clearRect(0, 0, 466, 466);
@@ -197,6 +254,10 @@ export function drawScene(ctx, opts) {
   const scene = opts.scene;
   if (scene === 'menu') {
     drawMenu(ctx);
+    return;
+  }
+  if (scene === 'summary') {
+    drawSummary(ctx, opts.zoneMs);
     return;
   }
   if (scene === 'ready' || scene === 'set' || scene === 'paused') {

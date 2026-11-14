@@ -1,72 +1,77 @@
 @import '../../common/style.css';
 
-.trophy {
-    margin-top: 32px;
-    width: 64px;
+/* Геометрия от центра экрана (233, 233). Карточки 150×64, зазор 10 → блок 310, слева 78. */
+
+.trophy-icon {
+    position: absolute;
+    left: 215px;
+    top: 52px;
+    width: 36px;
+    height: 36px;
+}
+
+.title {
+    position: absolute;
+    left: 0px;
+    top: 106px;
+    width: 466px;
+    height: 22px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #B0BEC5;
+    text-align: center;
+}
+
+.total {
+    position: absolute;
+    left: 0px;
+    top: 128px;
+    width: 466px;
+    height: 88px;
+    font-size: 84px;
+    text-align: center;
+}
+
+.cell {
+    position: absolute;
+    width: 150px;
     height: 64px;
-    border-radius: 32px;
-    background: linear-gradient(160deg, #FFE082 0%, #FFB300 45%, #FF8F00 100%);
+    border-radius: 18px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.05);
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.trophy-icon {
-    width: 32px;
-    height: 32px;
+.c-left {
+    left: 78px;
 }
 
-.title {
-    margin-top: 8px;
-    height: 24px;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    color: #B0BEC5;
+.c-right {
+    left: 238px;
 }
 
-.total {
-    height: 92px;
-    font-size: 88px;
+.r-top {
+    top: 226px;
 }
 
-.grid {
-    margin-top: 4px;
-    width: 344px;
-    flex-direction: column;
+.r-bottom {
+    top: 300px;
 }
 
-.row {
-    width: 344px;
-    height: 60px;
-}
-
-.row-gap {
-    margin-top: 10px;
-}
-
-.cell {
-    width: 167px;
-    height: 60px;
-    border-radius: 16px;
-    border-width: 1px;
-    border-color: rgba(255, 255, 255, 0.07);
-    background-color: rgba(255, 255, 255, 0.05);
-    padding-left: 14px;
+.cell-row {
+    height: 36px;
     align-items: center;
-}
-
-.cell-gap {
-    margin-left: 10px;
+    justify-content: center;
 }
 
 .cell-icon {
-    width: 26px;
-    height: 26px;
-    margin-right: 10px;
-}
-
-.cell-col {
-    flex-direction: column;
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
 }
 
 .cell-val {
@@ -79,48 +84,23 @@
 }
 
 .cell-sub {
-    font-size: 19px;
+    font-size: 18px;
     color: #FFC94D;
 }
 
 .cell-cap {
-    font-size: 14px;
+    font-size: 13px;
     color: #90A4AE;
-}
-
-.zones {
-    margin-top: 12px;
-    width: 260px;
-    height: 12px;
-}
-
-.z {
-    height: 12px;
-    border-radius: 6px;
-    margin-right: 3px;
-}
-
-.z0 {
-    background: linear-gradient(90deg, #00C853 0%, #69F0AE 100%);
-}
-
-.z1 {
-    background: linear-gradient(90deg, #FFB300 0%, #FFD54F 100%);
-}
-
-.z2 {
-    background: linear-gradient(90deg, #FF3D00 0%, #FF6E40 100%);
-}
-
-.zx {
-    background-color: rgba(255, 255, 255, 0.1);
+    text-align: center;
 }
 
 .done {
-    margin-top: 12px;
-    width: 180px;
-    height: 58px;
-    border-radius: 29px;
+    position: absolute;
+    left: 158px;
+    top: 378px;
+    width: 150px;
+    height: 52px;
+    border-radius: 26px;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.18);
     background: linear-gradient(180deg, #3A3D45 0%, #1F2126 100%);
@@ -129,7 +109,7 @@
 }
 
 .done-text {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: 800;
     color: #FFFFFF;
 }

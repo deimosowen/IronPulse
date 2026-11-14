@@ -10,14 +10,11 @@ export default {
         setsWord: 'подходов',
         kcal: 0,
         hrAvg: '--',
-        hrMax: '--',
-        z0: 0,
-        z1: 0,
-        z2: 0,
-        zEmpty: true
+        hrMax: '--'
     },
 
     onInit() {
+        this.zoneMs = [0, 0, 0];
         const s = this.$app.$def.engine.pendingSummary();
         if (s === null) {
             return;
@@ -29,19 +26,13 @@ export default {
         this.kcal = s.calories;
         this.hrAvg = s.hrAvg > 0 ? '' + s.hrAvg : '- -';
         this.hrMax = s.hrMax > 0 ? '' + s.hrMax : '- -';
-        const all = s.zoneMs[0] + s.zoneMs[1] + s.zoneMs[2];
-        if (all > 0) {
-            this.z0 = Math.round(s.zoneMs[0] * 100 / all);
-            this.z1 = Math.round(s.zoneMs[1] * 100 / all);
-            this.z2 = Math.round(s.zoneMs[2] * 100 / all);
-            this.zEmpty = false;
-        }
+        this.zoneMs = s.zoneMs;
     },
 
     onShow() {
         const cv = this.$refs.bg;
         if (cv) {
-            drawScene(cv.getContext('2d', { antialias: true }), { scene: 'summary' });
+            drawScene(cv.getContext('2d', { antialias: true }), { scene: 'summary', zoneMs: this.zoneMs });
         }
     },
 
