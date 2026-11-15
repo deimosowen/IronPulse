@@ -5,6 +5,7 @@ import runningLock from '@ohos.runningLock';
 import reminderAgent from '@ohos.reminderAgent';
 import brightness from '@system.brightness';
 import { t } from './i18n.js';
+import { createWrist } from './wrist.js';
 
 /**
  * Платформенный слой для часов на HarmonyOS 3 (API 8, JS FA):
@@ -147,6 +148,52 @@ export function vibrate(kind) {
     pulse(220);                         // одиночный: 3:00
   } else {
     buzz('short');                      // касания кнопок
+  }
+}
+
+let wristOn = false;
+
+/**
+ * Жест руки во время тренировки: cb('raise' | 'lower').
+ * Акселерометр раз в 60 мс; сам жест считает common/wrist.js.
+ */
+export function startWrist(cb) {
+  if (wristOn) {
+    return;
+  }
+  wristOn = true;
+  const w = createWrist(1);
+  try {
+    sensor.subscribeAccelerometer({
+      interval: 'ui',
+      success: (d) => {
+        const now = Date.now();
+        const ev = w.feed(d.x, d.y, d.z, now);
+        if (ev !== null) {
+          console.info('IronPulse wrist ' + ev);
+          cb(ev);
+        }
+      },
+      fail: (data, code) => {
+        wristOn = false;
+        console.warn('IronPulse accelerometer failed: ' + code + ' ' + data);
+      }
+    });
+  } catch (e) {
+    wristOn = false;
+    console.warn('IronPulse accelerometer: ' + e);
+  }
+}
+
+export function stopWrist() {
+  if (!wristOn) {
+    return;
+  }
+  wristOn = false;
+  try {
+    sensor.unsubscribeAccelerometer();
+  } catch (e) {
+    console.warn('IronPulse accelerometer unsubscribe: ' + e);
   }
 }
 

@@ -350,3 +350,35 @@ test('i18n: ru/en picked from locale, plural forms', async () => {
   const en = Object.keys((I.useLang('en'), I.strings())).sort();
   assert.deepEqual(en, ru, 'both dictionaries have the same keys');
 });
+
+test('wrist: raise and lower are detected with hold time, jerks are ignored', async () => {
+  const { createWrist, G } = await load('wrist.js');
+  const w = createWrist(1);
+  const feed = (x, y, z, from, to) => {
+    const ev = [];
+    for (let t = from; t <= to; t += 60) {
+      const e = w.feed(x, y, z, t);
+      if (e !== null) {
+        ev.push(e);
+      }
+    }
+    return ev;
+  };
+  // рука опущена: сила тяжести вдоль руки
+  assert.deepEqual(feed(G, 0, 0.5, 0, 1000), ['lower']);
+  // рывок во время подхода — ничего
+  assert.deepEqual(feed(0, 0, 2.5 * G, 1060, 1600), []);
+  // поднял посмотреть
+  assert.deepEqual(feed(0.3 * G, 0.2 * G, 0.9 * G, 1660, 2500), ['raise']);
+  assert.equal(w.state(), 'up');
+  // короткий наклон меньше времени удержания — без события
+  assert.deepEqual(feed(G, 0, 0, 2560, 2800), []);
+  assert.deepEqual(feed(0.3 * G, 0.2 * G, 0.9 * G, 2860, 3200), []);
+  // перевёрнутый знак: экран вверх даёт z < 0
+  const m = createWrist(-1);
+  let ev = null;
+  for (let t = 0; t < 600 && ev === null; t += 60) {
+    ev = m.feed(0, 0, -G, t);
+  }
+  assert.equal(ev, 'raise');
+});

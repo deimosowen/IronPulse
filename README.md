@@ -60,7 +60,8 @@ actually glance at between sets.
 - **Heart rate** — 1 Hz sensor, a gradient arc whose length is your HR and colour is your zone
   (`<110` recovery, `110–145` working, `>145` peak), plus calories (Keytel formula) next to it.
 - **Always-on dim mode** — the screen never drops to the watch face during a workout; after 8 s it dims to
-  near-black with the clock and timer in exactly the same place, and wakes on a tap or a rest signal.
+  near-black with the clock and timer in exactly the same place. Raise the wrist to wake it, lower it to dim
+  (like the built-in workout app); a tap or a rest signal wakes it too.
 - **Can't be dismissed by accident** — swipe-right and Back are blocked from *Start* until *Done*.
 - **Crash-safe** — the session is cached; after an app or watch restart the workout resumes where it was.
 - **Summary details** — swipe up on the summary: sets and average set time per exercise, average set and rest,

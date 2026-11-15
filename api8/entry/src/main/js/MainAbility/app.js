@@ -50,6 +50,7 @@ export default {
     // Обязательно отпускаем датчик пульса (иначе его зелёная подсветка может остаться включённой).
     platform.stopHeartRate();
     platform.holdCpu(false);
+    platform.stopWrist();
     platform.keepScreenOn(false);
     platform.scheduleRestAlarm(-1);
   }

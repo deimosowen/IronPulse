@@ -11,7 +11,8 @@ const HOLD_NEW_MS = 1500;      // удержание «Начать подход
 const HOLD_FINISH_MS = 1500;   // удержание «Завершить»
 const CTA_W = 270;
 const CTA_H = 80;
-const DIM_AFTER_MS = 8000;      // без касаний в отдыхе → тёмный режим
+const DIM_AFTER_MS = 8000;      // без касаний → тёмный режим
+const DIM_UP_MS = 20000;        // рука поднята (смотрят на экран) — держим дольше
 
 export default {
     data: {
@@ -63,6 +64,7 @@ export default {
         this.finishTimer = null;
         this.leaving = false;
         this.lastTouch = Date.now();
+        this.wristUp = false;
         this.unsubscribe = this.engine.subscribe((v) => this.apply(v));
     },
 
@@ -78,6 +80,7 @@ export default {
             }, 1000);
         }
         this.platform.disarmReminder();
+        this.platform.startWrist((ev) => this.onWrist(ev));
         this.touched();
         this.engine.tick();   // догнать время после сна экрана
         this.paint();
@@ -101,7 +104,18 @@ export default {
         this.touched();
     },
 
+    /** Поднял руку — полный экран; опустил — сразу тёмный режим (как у штатной тренировки). */
+    onWrist(ev) {
+        this.wristUp = ev === 'raise';
+        if (ev === 'raise') {
+            this.touched();
+        } else if (!this.dim && this.vPage === V_MAIN && this.ctaTimer === null && this.finishTimer === null) {
+            this.dim = true;
+        }
+    },
+
     onDestroy() {
+        this.platform.stopWrist();
         this.platform.keepScreenOn(false);
         if (this.unsubscribe) {
             this.unsubscribe();
@@ -145,7 +159,7 @@ export default {
         if (event) {
             this.dim = false;
             this.lastTouch = Date.now();
-        } else if (!this.dim && Date.now() - this.lastTouch > DIM_AFTER_MS && this.vPage === V_MAIN) {
+        } else if (!this.dim && Date.now() - this.lastTouch > (this.wristUp ? DIM_UP_MS : DIM_AFTER_MS) && this.vPage === V_MAIN) {
             this.dim = true;
         }
         this.dimSet = v.phase === 'set' && !v.paused;
